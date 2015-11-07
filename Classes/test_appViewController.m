@@ -278,7 +278,7 @@
             
             [returnStringTHEN release];
             
-            NSString *urlStringPLACE = [NSString stringWithFormat:@"http://%@.com/storephotomatch.php?&userName=Dave&locationId=1&photoNowId=1&photoThenId=2&lat=%@&lon=%@", _lat, _lon, domain ];
+            NSString *urlStringPLACE = [NSString stringWithFormat:@"http://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
             
             [NSData dataWithContentsOfURL: [NSURL URLWithString:urlStringPLACE]];
             
