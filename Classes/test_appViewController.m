@@ -175,6 +175,10 @@
         // simply write it back to the Documents folder so app can load it into overlay.
         pngPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Then.png"];
         [UIImagePNGRepresentation(img) writeToFile:pngPath atomically:YES];
+        
+        // Dismiss the picker
+        [self dismissModalViewControllerAnimated:YES];
+        [picker release];
     }
     else // send both images to the photo sharing website, as well as the latitute and longitude
     {
@@ -190,6 +194,11 @@
             // we're on a secondary thread, do expensive computation here
             // when we're done, we schedule another block to run on the main thread
             
+            // get current date/time up to the millisecond
+            NSDate *currentTime = [NSDate date];
+            NSTimeInterval inter = [currentTime timeIntervalSince1970];
+            NSString *timestamp = [NSString stringWithFormat:@"%f", inter];
+            
             // Get the image, whatever it is.
             UIImage* img  = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
             
@@ -204,10 +213,10 @@
             NSData *imageDataNOW = UIImagePNGRepresentation(img);
             NSString *domain = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppDomainName"];
         
-            NSLog(@"Domain Name: %@", domain);
+            //NSLog(@"Domain Name: %@", domain);
             
             // get the url of the Now and Then page that stores NOW photos.
-            NSString *urlString = [NSString stringWithFormat:@"http://%@.com/storenowphoto.php", domain];
+            NSString *urlString = [NSString stringWithFormat:@"http://%@.com/storenowphoto.php?createdAt=%@", domain, timestamp];
                 
             // Build the request and send the image.
             NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -227,7 +236,10 @@
             [request setHTTPBody:body];
                 
             NSData *returnDataNOW = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-            [[NSString alloc] initWithData:returnDataNOW encoding:NSUTF8StringEncoding];
+            
+            NSString *returnStringNOW = [[NSString alloc] initWithData:returnDataNOW encoding:NSUTF8StringEncoding];
+            
+            //NSLog(@"ReturnString NOW: %@", returnStringNOW);
         
             // next send the THEN image.  First get the image saved previously...
             
@@ -241,7 +253,7 @@
             
             NSData *imageDataTHEN = UIImagePNGRepresentation(imageTHEN);
             
-            NSString *urlStringTHEN = [NSString stringWithFormat:@"http://%@.com/storethenphoto.php", domain];
+            NSString *urlStringTHEN = [NSString stringWithFormat:@"http://%@.com/storethenphoto.php?createdAt=%@", domain, timestamp];
             
             NSMutableURLRequest *requestTHEN = [[NSMutableURLRequest alloc] init];
             [requestTHEN setURL:[NSURL URLWithString:urlStringTHEN]];
@@ -253,7 +265,7 @@
             
             NSMutableData *bodyTHEN = [NSMutableData data];
             [bodyTHEN appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundaryTHEN] dataUsingEncoding:NSUTF8StringEncoding]];
-            [bodyTHEN appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"now.png\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+            [bodyTHEN appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"Then.png\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
             [bodyTHEN appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
             [bodyTHEN appendData:[NSData dataWithData:imageDataTHEN]];
             [bodyTHEN appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundaryTHEN] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -261,6 +273,8 @@
         
             NSData *returnDataTHEN = [NSURLConnection sendSynchronousRequest:requestTHEN returningResponse:nil error:nil];
             NSString *returnStringTHEN = [[NSString alloc] initWithData:returnDataTHEN encoding:NSUTF8StringEncoding];
+            
+            NSLog(@"ReturnString THEN: %@", returnStringTHEN);
             
             [returnStringTHEN release];
             
@@ -272,12 +286,14 @@
                 // this code is back on the main thread, where it's safe to mess with the GUI
                 [spinner stopAnimating];
                 [spinner release];
+                
+                // Dismiss the picker
+                [self dismissModalViewControllerAnimated:YES];
+                [picker release];
             });
         });
     }
-    // Dismiss the picker
-    [self dismissModalViewControllerAnimated:YES];
-    [picker release];
+
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -288,13 +304,13 @@
     
     self.lat = [NSString stringWithFormat:@"%f", // had to say 'self.' here, not sure why :|
             degrees];
-    NSLog(@" Current Latitude : %@", _lat);
+    //NSLog(@" Current Latitude : %@", _lat);
 
     degrees = newLocation.coordinate.longitude;
     
     self.lon = [NSString stringWithFormat:@"%f",
             degrees];
-    NSLog(@" Current Longitude : %@", _lon);
+    //NSLog(@" Current Longitude : %@", _lon);
 
 }
 

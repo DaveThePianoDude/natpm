@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "980DC50981FD861CC4069CE3747396B81883344E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "980DC50981FD861CC4069CE3747396B81883344E" : 0,
+    "EA32E647612B3E4C99557394FE0723D07911B744" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "379674B5-185D-436C-AD0F-EEF76DBBF599",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "980DC50981FD861CC4069CE3747396B81883344E" : "SavCam2PNG%202\/",
+    "EA32E647612B3E4C99557394FE0723D07911B744" : "..\/nimbus"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "NowAndThen",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "NowAndThen.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/DaveThePianoDude\/natpm.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "980DC50981FD861CC4069CE3747396B81883344E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jverkoey\/nimbus.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EA32E647612B3E4C99557394FE0723D07911B744"
+    }
+  ]
+}
