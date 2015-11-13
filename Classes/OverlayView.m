@@ -61,7 +61,7 @@
         
         CGContextRef context = UIGraphicsGetCurrentContext();
         
-        CGContextTranslateCTM(context, newScreenHeight, 0);
+        CGContextTranslateCTM(context, newScreenHeight, 50);
         
         CGContextRotateCTM (context, radians(90));
         
@@ -69,12 +69,12 @@
         
         [thenImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeOverlay alpha:trans];
         
-        // grab the transformed image from the context
-        UIImage* transformed = UIGraphicsGetImageFromCurrentImageContext();
+        // get the transformed image from the context
+        UIImage* transformedImage = UIGraphicsGetImageFromCurrentImageContext();
         
         UIGraphicsEndImageContext();
         
-        UIImageView *transformedView = [[UIImageView alloc] initWithImage:transformed];
+        UIImageView *transformedView = [[UIImageView alloc] initWithImage:transformedImage];
 
         transformedView.userInteractionEnabled = YES;
         
@@ -86,6 +86,11 @@
     }
     
     return self;
+}
+
+- (void) drawRect:(CGRect)rect
+{    
+    NSLog(@"Refreshed overlay view.");
 }
 
 - (void) dealloc

@@ -98,6 +98,8 @@
     // lay it over the image picker view
     imagePicker.cameraOverlayView = overlayview;
     
+    //[imagePicker.view setNeedsDisplay];
+    
     // show all
 	[self presentModalViewController:imagePicker animated:YES];
     
@@ -109,6 +111,8 @@
     float sliderValue = transparencySlider.value;
     
     [imagePicker dismissModalViewControllerAnimated: NO];
+    
+    //[imagePicker.view display];
     
     // make another custom view
     OverlayView *overlayview = [[OverlayView alloc] initWithParams: self.view.frame : matchingImage : sliderValue];
@@ -204,7 +208,7 @@
             
             [locationManager stopUpdatingLocation];
             
-            CGSize newSize = CGSizeMake(600,400);
+            CGSize newSize = CGSizeMake(600,480);
             
             // this is a NOW image ... send it first, after resizing it
             img = [self imageWithImage:img scaledToSize:newSize];

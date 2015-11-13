@@ -29,12 +29,15 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
 {
     // Create and initialize the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
 	// Create primary view controller
 	vc = [[test_appViewController alloc] init];
     
-	[window addSubview:vc.view];
+	//[window addSubview:vc.view];
+    
+    [self.window setRootViewController:vc];
+    
     [window makeKeyAndVisible];
 }
 

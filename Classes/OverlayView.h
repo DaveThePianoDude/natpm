@@ -16,6 +16,8 @@
 
 @property (strong) UIImage* matchingImage;
 
+//@property (strong) UIImage* transformedImage;
+
 @end
 
 //static double BORDER_MARGIN = .05;  //5 percent border margin on TOP and BOTTOM of screen
