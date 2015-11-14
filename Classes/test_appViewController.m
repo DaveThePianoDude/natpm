@@ -42,6 +42,11 @@
     [super viewDidUnload];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return NO;
+}
+
 #pragma mark UI handlers
 
 // This function is called when the user clicks the green 'Activate Camera' button -> image picker is invoked as a camera.
@@ -142,11 +147,13 @@
 
 - (void)infoButtonPressed:(UIButton *)button
 {
-
+     NSString *domain = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppDomainName"];
+    
+        NSString *message = [NSString stringWithFormat:@"1. Pick a historic photo of a favorite place from your Camera Roll. 2. Go to that place.  3. Activate the camera and adjust transparency using the slider while matching up the historic photo with the current scene.  4. Take a new photo and press 'USE' to share with your friends at http://%@.com !", domain];
+    
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"Directions:"
-                              
-                              message: @"1. Pick a historic photo of a favorite place from your Camera Roll. 2. Go to that place.  3. Activate the camera and adjust transparency using the slider while matching up the old photo with the current scene.  4. Take photo and press 'USE' to share with your friends on Facebook!"\
+                              initWithTitle: @"Instructions:"
+                              message: message
                               delegate: nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
@@ -418,17 +425,24 @@ finishedSavingWithError:(NSError *)error
           {} else infoIconY=240;
     }
       
-    int r = arc4random() % 3;
+    //int r = arc4random() % 3;
       
-    if (r == 1)
+    //if (r == 1)
       
-        infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(240,infoIconY,60,60)];
+    //    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(240,infoIconY,60,60)];
       
-    else
+    //else
         
-        infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(190,infoIconY,60,60)];
+    //    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(190,infoIconY,60,60)];
       
-    [infoIcon setBackgroundImage:[UIImage imageNamed:@"info-icon.png"] forState:UIControlStateNormal];
+    //[infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
+    //[infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
+    //[self.view addSubview:infoIcon];
+    //[infoIcon release];
+      
+    // add button to show instructions
+    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(80, 160, 160, 63)];
+    [infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
     [infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:infoIcon];
     [infoIcon release];
@@ -447,10 +461,10 @@ finishedSavingWithError:(NSError *)error
     
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
-{
-    return YES;
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+//{
+//    return YES;
+//}
 
 #pragma mark -
 
