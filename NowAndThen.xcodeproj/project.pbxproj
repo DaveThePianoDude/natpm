@@ -59,6 +59,14 @@
 		0878376C182552F1004AA3B6 /* NIPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0878376A182552F1004AA3B6 /* NIPageView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		0878377318258577004AA3B6 /* CaptionedPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0878377218258576004AA3B6 /* CaptionedPhotoView.m */; };
 		088007251819398F0063FBC7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088007241819398F0063FBC7 /* CoreLocation.framework */; };
+		089D44C31BFBCA4E00A5806E /* JPSCameraButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 089D44BB1BFBCA4E00A5806E /* JPSCameraButton.m */; };
+		089D44C41BFBCA4E00A5806E /* JPSImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 089D44BC1BFBCA4E00A5806E /* JPSImagePickerController.bundle */; };
+		089D44C51BFBCA4E00A5806E /* JPSImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 089D44BE1BFBCA4E00A5806E /* JPSImagePickerController.m */; };
+		089D44C61BFBCA4E00A5806E /* JPSVolumeButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 089D44C01BFBCA4E00A5806E /* JPSVolumeButtonHandler.m */; };
+		089D44C71BFBCA4E00A5806E /* UIImage+DrawBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 089D44C21BFBCA4E00A5806E /* UIImage+DrawBlock.m */; };
+		089D44C91BFBD15100A5806E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089D44C81BFBD15100A5806E /* AVFoundation.framework */; };
+		089D44CB1BFBD1BF00A5806E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089D44CA1BFBD1BF00A5806E /* MediaPlayer.framework */; };
+		089D44CD1BFBD62600A5806E /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089D44CC1BFBD62600A5806E /* CoreMotion.framework */; };
 		08A1814517A2036100E65D0A /* Gallery.png in Resources */ = {isa = PBXBuildFile; fileRef = 08A1814417A2036100E65D0A /* Gallery.png */; };
 		08B65B5717EE1C490026755B /* SecondTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B65B5617EE1C490026755B /* SecondTitleView.m */; };
 		08B65B5917EE1E610026755B /* NowAndThen_Cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B65B5817EE1E610026755B /* NowAndThen_Cover.png */; };
@@ -188,6 +196,18 @@
 		087837711825856F004AA3B6 /* CaptionedPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptionedPhotoView.h; path = ../../../nimbus/examples/photos/NetworkPhotoAlbums/src/CaptionedPhotoView.h; sourceTree = "<group>"; };
 		0878377218258576004AA3B6 /* CaptionedPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaptionedPhotoView.m; path = ../../../nimbus/examples/photos/NetworkPhotoAlbums/src/CaptionedPhotoView.m; sourceTree = "<group>"; };
 		088007241819398F0063FBC7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		089D44BA1BFBCA4E00A5806E /* JPSCameraButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSCameraButton.h; sourceTree = "<group>"; };
+		089D44BB1BFBCA4E00A5806E /* JPSCameraButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSCameraButton.m; sourceTree = "<group>"; };
+		089D44BC1BFBCA4E00A5806E /* JPSImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JPSImagePickerController.bundle; sourceTree = "<group>"; };
+		089D44BD1BFBCA4E00A5806E /* JPSImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSImagePickerController.h; sourceTree = "<group>"; };
+		089D44BE1BFBCA4E00A5806E /* JPSImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSImagePickerController.m; sourceTree = "<group>"; };
+		089D44BF1BFBCA4E00A5806E /* JPSVolumeButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSVolumeButtonHandler.h; sourceTree = "<group>"; };
+		089D44C01BFBCA4E00A5806E /* JPSVolumeButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSVolumeButtonHandler.m; sourceTree = "<group>"; };
+		089D44C11BFBCA4E00A5806E /* UIImage+DrawBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+DrawBlock.h"; sourceTree = "<group>"; };
+		089D44C21BFBCA4E00A5806E /* UIImage+DrawBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+DrawBlock.m"; sourceTree = "<group>"; };
+		089D44C81BFBD15100A5806E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		089D44CA1BFBD1BF00A5806E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		089D44CC1BFBD62600A5806E /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		08A1814417A2036100E65D0A /* Gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gallery.png; sourceTree = "<group>"; };
 		08B65B5517EE1C490026755B /* SecondTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondTitleView.h; sourceTree = "<group>"; };
 		08B65B5617EE1C490026755B /* SecondTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondTitleView.m; sourceTree = "<group>"; };
@@ -217,6 +237,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				089D44CD1BFBD62600A5806E /* CoreMotion.framework in Frameworks */,
+				089D44CB1BFBD1BF00A5806E /* MediaPlayer.framework in Frameworks */,
+				089D44C91BFBD15100A5806E /* AVFoundation.framework in Frameworks */,
 				088007251819398F0063FBC7 /* CoreLocation.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -236,6 +259,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				089D44B91BFBCA4E00A5806E /* JPSImagePickerController */,
 				0878377218258576004AA3B6 /* CaptionedPhotoView.m */,
 				087837711825856F004AA3B6 /* CaptionedPhotoView.h */,
 				0878377018257F20004AA3B6 /* NIPhotoScrollViewDelegate.h */,
@@ -390,6 +414,22 @@
 			name = "Paging Scroll View";
 			sourceTree = "<group>";
 		};
+		089D44B91BFBCA4E00A5806E /* JPSImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				089D44BA1BFBCA4E00A5806E /* JPSCameraButton.h */,
+				089D44BB1BFBCA4E00A5806E /* JPSCameraButton.m */,
+				089D44BC1BFBCA4E00A5806E /* JPSImagePickerController.bundle */,
+				089D44BD1BFBCA4E00A5806E /* JPSImagePickerController.h */,
+				089D44BE1BFBCA4E00A5806E /* JPSImagePickerController.m */,
+				089D44BF1BFBCA4E00A5806E /* JPSVolumeButtonHandler.h */,
+				089D44C01BFBCA4E00A5806E /* JPSVolumeButtonHandler.m */,
+				089D44C11BFBCA4E00A5806E /* UIImage+DrawBlock.h */,
+				089D44C21BFBCA4E00A5806E /* UIImage+DrawBlock.m */,
+			);
+			path = JPSImagePickerController;
+			sourceTree = SOURCE_ROOT;
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +488,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				089D44CC1BFBD62600A5806E /* CoreMotion.framework */,
+				089D44CA1BFBD1BF00A5806E /* MediaPlayer.framework */,
+				089D44C81BFBD15100A5806E /* AVFoundation.framework */,
 				087836BB18254643004AA3B6 /* FacebookSDK.framework */,
 				5259454E109BB32800279F2E /* MessageUI.framework */,
 				52E16F18106E44A300EADDF5 /* QuartzCore.framework */,
@@ -517,6 +560,7 @@
 				52704E9E11376A3000BEF866 /* Camera.png in Resources */,
 				0838AEFB179F4FFD0005C015 /* Default-568h@2x.png in Resources */,
 				08A1814517A2036100E65D0A /* Gallery.png in Resources */,
+				089D44C41BFBCA4E00A5806E /* JPSImagePickerController.bundle in Resources */,
 				083CD3CF17A40D9300AA00EC /* time_machine.png in Resources */,
 				08324C7817D6D2AB00ED4CD2 /* Facebook.png in Resources */,
 				0866B7FD17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png in Resources */,
@@ -539,6 +583,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* test_appAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* test_appViewController.m in Sources */,
+				089D44C71BFBCA4E00A5806E /* UIImage+DrawBlock.m in Sources */,
 				0838AEF9179F4EF80005C015 /* OverlayView.m in Sources */,
 				08B65B5717EE1C490026755B /* SecondTitleView.m in Sources */,
 				087836BF18254693004AA3B6 /* NetworkPhotoAlbumViewController.m in Sources */,
@@ -571,10 +616,12 @@
 				0878372918254781004AA3B6 /* NIOperations.m in Sources */,
 				0878372A18254781004AA3B6 /* NIPaths.m in Sources */,
 				0878372B18254781004AA3B6 /* NIRuntimeClassModifications.m in Sources */,
+				089D44C61BFBCA4E00A5806E /* JPSVolumeButtonHandler.m in Sources */,
 				0878372C18254781004AA3B6 /* NISDKAvailability.m in Sources */,
 				0878372D18254781004AA3B6 /* NIState.m in Sources */,
 				0878372E18254781004AA3B6 /* NIViewRecycler.m in Sources */,
 				0878372F18254781004AA3B6 /* NSString+NimbusCore.m in Sources */,
+				089D44C51BFBCA4E00A5806E /* JPSImagePickerController.m in Sources */,
 				0878375B18254863004AA3B6 /* NIPhotoAlbumScrollView.m in Sources */,
 				0878375C18254863004AA3B6 /* NIPhotoScrollView.m in Sources */,
 				0878375D18254863004AA3B6 /* NIToolbarPhotoViewController.m in Sources */,
@@ -582,6 +629,7 @@
 				0878376B182552F1004AA3B6 /* NIPagingScrollView.m in Sources */,
 				0878376C182552F1004AA3B6 /* NIPageView.m in Sources */,
 				0878377318258577004AA3B6 /* CaptionedPhotoView.m in Sources */,
+				089D44C31BFBCA4E00A5806E /* JPSCameraButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +640,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "";
@@ -607,7 +656,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = test_app_Prefix.pch;
 				INFOPLIST_FILE = "test_app-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = DAH7.1;
 				PRODUCT_NAME = NowAndThen;
 				PROVISIONING_PROFILE = "";
@@ -620,6 +669,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -632,7 +682,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = test_app_Prefix.pch;
 				INFOPLIST_FILE = "test_app-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = DAH7.1;
 				PRODUCT_NAME = NowAndThen;
 				PROVISIONING_PROFILE = "";

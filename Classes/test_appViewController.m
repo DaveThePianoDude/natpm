@@ -189,7 +189,7 @@
         
         // Dismiss the picker
         [self dismissModalViewControllerAnimated:YES];
-        [picker release];
+        //[picker release];
     }
     else // send both images to the photo sharing website, as well as the latitute and longitude
     {
@@ -287,7 +287,7 @@
             
             NSLog(@"ReturnString THEN: %@", returnStringTHEN);
             
-            [returnStringTHEN release];
+            //[returnStringTHEN release];
             
             NSString *urlStringPLACE = [NSString stringWithFormat:@"http://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
             
@@ -296,11 +296,11 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 // this code is back on the main thread, where it's safe to mess with the GUI
                 [spinner stopAnimating];
-                [spinner release];
+                //[spinner release];
                 
                 // Dismiss the picker
                 [self dismissModalViewControllerAnimated:YES];
-                [picker release];
+                //[picker release];
             });
         });
     }
@@ -345,10 +345,10 @@ finishedSavingWithError:(NSError *)error
   if (self = [super init]) 
   {
     // set the hosting view
-    self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
       
     // add a modern Historia Title cover
-    SecondTitleView *secondView = [[[SecondTitleView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+    SecondTitleView *secondView = [[SecondTitleView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     UIImage* img2 = [UIImage imageNamed:@"NowAndThen_CoverUpdate.png"];
     UIGraphicsBeginImageContext(secondView.frame.size);
     [img2 drawInRect:CGRectMake(0,0,secondView.frame.size.width,secondView.frame.size.height)];
@@ -358,7 +358,7 @@ finishedSavingWithError:(NSError *)error
     UIImageView * imageView2 = [[UIImageView alloc] initWithImage:newImage2];
     imageView2.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView2];
-    [imageView2 release];
+    //[imageView2 release];
       
     // add a historic Historia Title cover  
     UIImage* img = [UIImage imageNamed:@"NowAndThen_Cover.png"];
@@ -370,7 +370,7 @@ finishedSavingWithError:(NSError *)error
     UIImageView * imageView = [[UIImageView alloc] initWithImage:newImage];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
-    [imageView release];
+    //[imageView release];
       
     // do some animation
     [UIView animateWithDuration:1.5
@@ -385,67 +385,21 @@ finishedSavingWithError:(NSError *)error
     [button setBackgroundImage:[UIImage imageNamed:@"Camera.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];      
     [self.view addSubview:button];
-    [button release];
+    //[button release];
       
     // add button to activate gallery image picker
     pickerButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 480, 160, 63)];
     [pickerButton setBackgroundImage:[UIImage imageNamed:@"Gallery.png"] forState:UIControlStateNormal];
     [pickerButton addTarget:self action:@selector(pickerButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:pickerButton];
-    [pickerButton release];
-      
-      int infoIconY;
-      
-      if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-          
-          if ([[UIScreen mainScreen] bounds].size.height > 480.0f) {
-              /*Do iPhone 5 stuff here.*/
-              infoIconY = 295;
-          } else {
-              /*Do iPhone Classic stuff here.*/
-              infoIconY = 270;
-          }
-      } else {
-          /*Do iPad stuff here.*/
-            infoIconY = 240;
-      }
-      
-    NSString* messageHardwareType = nil;
-      
-    struct utsname platform;
-    
-      int rc = uname(&platform);
-      
-    if (rc != -1)
-    {
-          messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
-          
-          if ([messageHardwareType rangeOfString:@"iPad"].location == NSNotFound)
-              
-          {} else infoIconY=240;
-    }
-      
-    //int r = arc4random() % 3;
-      
-    //if (r == 1)
-      
-    //    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(240,infoIconY,60,60)];
-      
-    //else
-        
-    //    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(190,infoIconY,60,60)];
-      
-    //[infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
-    //[infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
-    //[self.view addSubview:infoIcon];
-    //[infoIcon release];
+    //[pickerButton release];
       
     // add button to show instructions
     infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(80, 160, 160, 63)];
     [infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
     [infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:infoIcon];
-    [infoIcon release];
+    //[infoIcon release];
   }
     
   return self;
@@ -454,7 +408,7 @@ finishedSavingWithError:(NSError *)error
 - (void)dealloc
 {
   [OverlayView dealloc];
-  [super dealloc];
+  //[super dealloc];
 }
 
 - (void)facebookViewControllerDoneWasPressed:(id)sender {

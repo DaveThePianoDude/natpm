@@ -6,7 +6,8 @@
 //
 //  HISTORY:
 //
-//  07.24.13    Managed to get it to display 'ghost' image overlay from .png file.
+//  07.24.13    Managed to get it to display 'ghost' image overlay from .png.
+//  11.13.15    Upgraded and improved version for the iPhone 5.
 
 #define radians(degrees) (degrees * M_PI/180)
 
@@ -74,15 +75,15 @@
         
         UIGraphicsEndImageContext();
         
-        UIImageView *transformedView = [[UIImageView alloc] initWithImage:transformedImage];
-
-        transformedView.userInteractionEnabled = YES;
-        
-        self.userInteractionEnabled = YES;
-        
-        [self addSubview:transformedView];
-        
-        [transformedView release];
+        @autoreleasepool {
+            UIImageView *transformedView = [[UIImageView alloc] initWithImage:transformedImage];
+            
+            transformedView.userInteractionEnabled = YES;
+            
+            self.userInteractionEnabled = YES;
+            
+            [self addSubview:transformedView];
+        }
     }
     
     return self;
@@ -95,7 +96,7 @@
 
 - (void) dealloc
 {
-    [super dealloc];
+    //[super dealloc];
 }
 
 

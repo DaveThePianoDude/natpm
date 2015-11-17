@@ -6,8 +6,11 @@
 
 int main(int argc, char *argv[]) {
     
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, @"test_appAppDelegate");
-    [pool release];
+    int retVal = NULL;
+    
+    @autoreleasepool {
+        retVal = UIApplicationMain(argc, argv, nil, @"test_appAppDelegate");
+    }
+
     return retVal;
 }
