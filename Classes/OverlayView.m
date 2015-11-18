@@ -18,19 +18,23 @@
 
 @implementation OverlayView
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
    
     return NO;
 }
 
 - (id)initWithParams:(CGRect)frame : (UIImage*)matchingImage :(float)trans
 {
-    if (self = [super initWithFrame:frame]) {
+    CGRect newR = frame;
+    newR.size.height = 50;
+    
+    if (self = [super initWithFrame:newR]) {
         
         // clear the background color of the overlay
-        self.opaque = NO;
-        self.alpha = 1.0;
-        self.backgroundColor = [UIColor clearColor];
+        //self.opaque = NO;
+        //self.alpha = 1.0;
+        //self.backgroundColor = [UIColor clearColor];
 
         // get screen dimensions and total span of height in pixls
         double screenHeight = [[UIScreen mainScreen] bounds].size.width; // flip this for landscape mode
@@ -57,13 +61,9 @@
         
         // create a new size object for then image, fit into the
         CGSize newSize = CGSizeMake(newScreenWidth, newScreenHeight);
-        
-        UIGraphicsBeginImageContext(CGSizeMake(1000,800));
-        
+        UIGraphicsBeginImageContext(CGSizeMake(1000, 800));
         CGContextRef context = UIGraphicsGetCurrentContext();
-        
         CGContextTranslateCTM(context, newScreenHeight, 50);
-        
         CGContextRotateCTM (context, radians(90));
         
         // create a new image that fits exactly within the iPhone's screen frame...
@@ -71,12 +71,12 @@
         [thenImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeOverlay alpha:trans];
         
         // get the transformed image from the context
-        UIImage* transformedImage = UIGraphicsGetImageFromCurrentImageContext();
+        _transformedImage = UIGraphicsGetImageFromCurrentImageContext();
         
         UIGraphicsEndImageContext();
         
         @autoreleasepool {
-            UIImageView *transformedView = [[UIImageView alloc] initWithImage:transformedImage];
+            UIImageView *transformedView = [[UIImageView alloc] initWithImage:_transformedImage];
             
             transformedView.userInteractionEnabled = YES;
             

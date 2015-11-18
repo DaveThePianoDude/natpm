@@ -12,9 +12,11 @@
 #import "test_appViewController.h"
 #import "OverlayView.h"
 
+#import "JPSImagePickerController.h"
+
 #include <sys/utsname.h>
 
-@interface test_appViewController ()
+@interface test_appViewController () <JPSImagePickerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *selectedFriendsView;
 @property (strong, nonatomic) NSMutableArray * localAlbums;
@@ -23,18 +25,43 @@
 @property (strong, nonatomic) NSString*  LATITUDE;
 @property (strong, nonatomic) NSString*  LONGITUDE;
 
+@property (nonatomic, strong) UIButton    *button;
+@property (nonatomic, strong) UIImageView *imageView;
+
 @end
 
 @implementation test_appViewController
 
 @synthesize matchingImage;
 
-
 #pragma mark View lifecycle
 
 - (void)viewDidLoad {
  
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    //[self setupButton];
+    [self setupImageView];
+}
+
+- (void)setupImageView {
+    // Image View
+    _imageView = [[UIImageView alloc] init];
+    _imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    _imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:_imageView];
+    
+    // Constraints
+    NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_button][_imageView]|"
+                                                                options:0
+                                                                metrics:nil
+                                                                  views:NSDictionaryOfVariableBindings(_button, _imageView)];
+    NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:@"|[_imageView]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:NSDictionaryOfVariableBindings(_imageView)];
+    [self.view addConstraints:vertical];
+    [self.view addConstraints:horizontal];
 }
 
 - (void)viewDidUnload {
@@ -59,11 +86,9 @@
     [locationManager startUpdatingLocation];
     
 	// Create image picker controller
-    imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
-    imagePicker.allowsEditing = YES;
+    imagePicker = [[JPSImagePickerController alloc] init];
 	imagePicker.delegate = self;
-	imagePicker.allowsImageEditing = YES;
+    imagePicker.flashlightEnabled = NO;
 
     int left_edge = 440;
     
@@ -101,29 +126,36 @@
     OverlayView *overlayview = [[OverlayView alloc] initWithParams: self.view.frame : matchingImage : 0.5];
     
     // lay it over the image picker view
-    imagePicker.cameraOverlayView = overlayview;
-    
-    //[imagePicker.view setNeedsDisplay];
+    [imagePicker.view addSubview:overlayview];
     
     // show all
-	[self presentModalViewController:imagePicker animated:YES];
+	//[self presentModalViewController:imagePicker animated:YES];
+    [self presentViewController:imagePicker animated:YES completion:nil];
     
 }
 
 // the slider calls this event handler once its position has changed
 -(IBAction) sliderChanged:(id) sender {
     
+    for (UIView *subView in imagePicker.view.subviews)
+    {
+        if ([subView isKindOfClass:[OverlayView class]])
+        {
+            [subView removeFromSuperview];
+        }
+    }
+    
     float sliderValue = transparencySlider.value;
     
     [imagePicker dismissModalViewControllerAnimated: NO];
     
-    //[imagePicker.view display];
-    
     // make another custom view
     OverlayView *overlayview = [[OverlayView alloc] initWithParams: self.view.frame : matchingImage : sliderValue];
     
+    overlayview.tag = "1";
+    
     // lay it over the image picker view
-    imagePicker.cameraOverlayView = overlayview;
+    [imagePicker.view addSubview:overlayview];
     
     [self presentModalViewController:imagePicker animated:NO];
 }
@@ -133,13 +165,10 @@
 {
 	// Create image picker controller
     imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    //imagePicker.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     
     // Delegate is self
 	imagePicker.delegate = self;
-    
-    // Allow editing of image ?
-	imagePicker.allowsImageEditing = NO;
     
     // Show image picker
 	[self presentModalViewController:imagePicker animated:YES];
@@ -176,7 +205,8 @@
 {
 
     // If the app is in camera roll mode,...
-    if (imagePicker.sourceType ==  UIImagePickerControllerSourceTypeSavedPhotosAlbum)
+    //if (imagePicker.sourceType ==  UIImagePickerControllerSourceTypeSavedPhotosAlbum)
+    if (false)
     {    // Get the image, whatever it is.
         UIImage* img  = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
         
@@ -189,7 +219,7 @@
         
         // Dismiss the picker
         [self dismissModalViewControllerAnimated:YES];
-        //[picker release];
+        
     }
     else // send both images to the photo sharing website, as well as the latitute and longitude
     {
@@ -198,7 +228,7 @@
         spinner.hidesWhenStopped = YES;
         spinner.center = CGPointMake(160, 240);
         spinner.tag = 12;
-        [imagePicker.cameraOverlayView addSubview: spinner];
+        [imagePicker.view addSubview: spinner];
         [spinner startAnimating];
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
@@ -296,11 +326,9 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 // this code is back on the main thread, where it's safe to mess with the GUI
                 [spinner stopAnimating];
-                //[spinner release];
                 
                 // Dismiss the picker
                 [self dismissModalViewControllerAnimated:YES];
-                //[picker release];
             });
         });
     }
@@ -315,14 +343,11 @@
     
     self.lat = [NSString stringWithFormat:@"%f", // had to say 'self.' here, not sure why :|
             degrees];
-    //NSLog(@" Current Latitude : %@", _lat);
 
     degrees = newLocation.coordinate.longitude;
     
     self.lon = [NSString stringWithFormat:@"%f",
             degrees];
-    //NSLog(@" Current Longitude : %@", _lon);
-
 }
 
 -(void)image:(UIImage *)image
@@ -358,7 +383,6 @@ finishedSavingWithError:(NSError *)error
     UIImageView * imageView2 = [[UIImageView alloc] initWithImage:newImage2];
     imageView2.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView2];
-    //[imageView2 release];
       
     // add a historic Historia Title cover  
     UIImage* img = [UIImage imageNamed:@"NowAndThen_Cover.png"];
@@ -370,7 +394,6 @@ finishedSavingWithError:(NSError *)error
     UIImageView * imageView = [[UIImageView alloc] initWithImage:newImage];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
-    //[imageView release];
       
     // do some animation
     [UIView animateWithDuration:1.5
@@ -385,41 +408,50 @@ finishedSavingWithError:(NSError *)error
     [button setBackgroundImage:[UIImage imageNamed:@"Camera.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];      
     [self.view addSubview:button];
-    //[button release];
       
     // add button to activate gallery image picker
     pickerButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 480, 160, 63)];
     [pickerButton setBackgroundImage:[UIImage imageNamed:@"Gallery.png"] forState:UIControlStateNormal];
     [pickerButton addTarget:self action:@selector(pickerButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:pickerButton];
-    //[pickerButton release];
       
     // add button to show instructions
     infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(80, 160, 160, 63)];
     [infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
     [infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:infoIcon];
-    //[infoIcon release];
   }
     
   return self;
 }
 
+- (void)picker:(JPSImagePickerController *)picker didTakePicture:(UIImage *)picture {
+    picker.confirmationString = @"Zoom in to make sure you're happy with your picture";
+    picker.confirmationOverlayString = @"Analyzing Image...";
+    picker.confirmationOverlayBackgroundColor = [UIColor orangeColor];
+    double delayInSeconds = 1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        picker.confirmationOverlayString = @"Good Quality";
+        picker.confirmationOverlayBackgroundColor = [UIColor colorWithRed:0 green:0.8f blue:0 alpha:1.0f];
+    });
+}
+
+- (void)picker:(JPSImagePickerController *)picker didConfirmPicture:(UIImage *)picture {
+    self.imageView.image = picture;
+}
+
+- (void)pickerDidCancel:(JPSImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)dealloc
 {
-  [OverlayView dealloc];
-  //[super dealloc];
+    [OverlayView dealloc];
 }
-
-- (void)facebookViewControllerDoneWasPressed:(id)sender {
-    
-}
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
-//{
-//    return YES;
-//}
 
 #pragma mark -
 
 @end
+
+

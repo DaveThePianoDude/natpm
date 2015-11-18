@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "JPSImagePickerController.h"
 
 @class test_appViewController;
 

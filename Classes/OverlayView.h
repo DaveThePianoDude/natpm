@@ -16,7 +16,7 @@
 
 @property (strong) UIImage* matchingImage;
 
-//@property (strong) UIImage* transformedImage;
+@property (strong) UIImage* transformedImage;
 
 @end
 

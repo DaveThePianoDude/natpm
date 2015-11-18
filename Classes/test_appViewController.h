@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "SecondTitleView.h"
 #import <CoreLocation/CoreLocation.h>
+#import "JPSImagePickerController.h"
 
 @interface test_appViewController : UIViewController  <UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
 {
@@ -16,7 +17,7 @@
     UIButton *infoIcon;
     
     UISlider *transparencySlider;
-    UIImagePickerController *imagePicker;
+    JPSImagePickerController *imagePicker;
     UIActivityIndicatorView *spinner;
     
     CLLocationManager *locationManager;
