@@ -89,6 +89,7 @@
     imagePicker = [[JPSImagePickerController alloc] init];
 	imagePicker.delegate = self;
     imagePicker.flashlightEnabled = NO;
+    imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera;
 
     int left_edge = 440;
     
@@ -131,7 +132,6 @@
     // show all
 	//[self presentModalViewController:imagePicker animated:YES];
     [self presentViewController:imagePicker animated:YES completion:nil];
-    
 }
 
 // the slider calls this event handler once its position has changed
@@ -165,7 +165,7 @@
 {
 	// Create image picker controller
     imagePicker = [[UIImagePickerController alloc] init];
-    //imagePicker.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    imagePicker.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     
     // Delegate is self
 	imagePicker.delegate = self;
@@ -200,14 +200,12 @@
 }
 
 // This function is called once a photo is picked from the camera roll AND once the user presses blue "Use" button on the camera interface.
-
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-
     // If the app is in camera roll mode,...
-    //if (imagePicker.sourceType ==  UIImagePickerControllerSourceTypeSavedPhotosAlbum)
-    if (false)
-    {    // Get the image, whatever it is.
+    if (imagePicker.sourceType == ImagePickerControllerSourceTypeCamera)
+    {
+        // Get the image, whatever it is.
         UIImage* img  = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
         
         // Make a path to the 'NOW' image.
@@ -219,7 +217,6 @@
         
         // Dismiss the picker
         [self dismissModalViewControllerAnimated:YES];
-        
     }
     else // send both images to the photo sharing website, as well as the latitute and longitude
     {
@@ -316,8 +313,6 @@
             NSString *returnStringTHEN = [[NSString alloc] initWithData:returnDataTHEN encoding:NSUTF8StringEncoding];
             
             NSLog(@"ReturnString THEN: %@", returnStringTHEN);
-            
-            //[returnStringTHEN release];
             
             NSString *urlStringPLACE = [NSString stringWithFormat:@"http://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
             

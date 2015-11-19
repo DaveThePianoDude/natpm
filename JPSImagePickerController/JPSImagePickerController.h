@@ -13,6 +13,14 @@
 
 @interface JPSImagePickerController : UIViewController
 
+enum ImagePickerControllerSourceType : NSUInteger {
+    ImagePickerControllerSourceTypeSavedPhotosAlbum = 1,
+    ImagePickerControllerSourceTypeCamera = 2
+};
+
+@property (nonatomic, assign)  enum ImagePickerControllerSourceType  sourceType;
+
+
 #pragma mark - Device Orientation Related
 @property (strong, nonatomic) CMMotionManager *motionManager;
 @property (readwrite, nonatomic) UIDeviceOrientation deviceOrientation;
@@ -55,7 +63,5 @@
 - (void)picker:(JPSImagePickerController *)picker didConfirmPicture:(UIImage *)picture;
 // Called immediately after the "Cancel" button was tapped
 - (void)pickerDidCancel:(JPSImagePickerController *)picker;
-
-
 
 @end

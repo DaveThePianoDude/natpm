@@ -31,6 +31,7 @@
 @property (nonatomic, strong) UIImage     * previewImage;
 @property (nonatomic, strong) UIImageView * previewImageView;
 @property (nonatomic, strong) UIButton    * retakeButton;
+@property (nonatomic, strong) UIButton    * flipItButton;
 @property (nonatomic, strong) UIButton    * useButton;
 
 // Preview Top Area
@@ -494,6 +495,7 @@
     // Preview UI
     [self addPreview];
     [self addRetakeButton];
+    [self addFlipItButton];
     [self addUseButton];
 
     // Preview Top Area UI
@@ -546,6 +548,35 @@
                                                            multiplier:1.0f
                                                              constant:15.5f];
     NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.retakeButton
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0f
+                                                               constant:-19.5f];
+    [self.view addConstraints:@[left, bottom]];
+}
+
+- (void)addFlipItButton {
+    if (self.flipItButton) {
+        self.flipItButton.hidden = NO;
+        return;
+    }
+    self.flipItButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.flipItButton.titleLabel.font = [UIFont systemFontOfSize:18.0f];
+    self.flipItButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.flipItButton setTitle:@"Flip" forState:UIControlStateNormal];
+    [self.flipItButton addTarget:self action:@selector(flipIt) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.flipItButton];
+    
+    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.flipItButton
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1.0f
+                                                             constant:15.5f];
+    NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.flipItButton
                                                               attribute:NSLayoutAttributeBottom
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.view
@@ -617,7 +648,7 @@
                                                              relatedBy:NSLayoutRelationEqual
                                                                 toItem:self.view
                                                              attribute:NSLayoutAttributeWidth
-                                                            multiplier:0.9f
+                                                            multiplier:1.0f
                                                               constant:0];
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.confirmationLabel
                                                            attribute:NSLayoutAttributeTop
@@ -664,7 +695,7 @@
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self.capturePreviewView
                                                            attribute:NSLayoutAttributeTop
-                                                          multiplier:1.0f
+                                                          multiplier:0.9f
                                                             constant:0];
     [self.view addConstraints:@[centerX, width, top]];
 }
@@ -695,6 +726,7 @@
 - (void)retake {
     self.previewImageView.hidden = YES;
     self.retakeButton.hidden = YES;
+    self.flipItButton.hidden = YES;
     self.useButton.hidden = YES;
 
     self.confirmationLabel.hidden = YES;
@@ -707,6 +739,16 @@
     self.capturePreviewLayer.hidden = NO;
 
     self.cameraButton.enabled = YES;
+}
+
+- (void)flipIt {
+    
+    if (self.previewImageView.hidden)
+        self.previewImageView.hidden = NO;
+    else
+        self.previewImageView.hidden = YES;
+    
+    NSLog(@"Flipped it good.");
 }
 
 - (void)use {
