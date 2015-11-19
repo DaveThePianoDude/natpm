@@ -504,11 +504,7 @@
 }
 
 - (void)addPreview {
-    if (self.previewImageView) {
-        self.previewImageView.image = self.previewImage;
-        self.previewImageView.hidden = NO;
-        return;
-    }
+
     self.previewImageView = [[UIImageView alloc] initWithFrame:self.capturePreviewView.bounds];
     self.previewImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.previewImageView.image = self.previewImage;
@@ -724,6 +720,16 @@
 #pragma mark - Preview Actions
 
 - (void)retake {
+    
+    // Need to remove the old view now.  Otherwise, it disables the slider control.
+    for (UIView *subView in self.view.subviews)
+    {
+        if ([subView isKindOfClass:[UIScrollView class]])
+        {
+            [subView removeFromSuperview];
+        }
+    }
+    
     self.previewImageView.hidden = YES;
     self.retakeButton.hidden = YES;
     self.flipItButton.hidden = YES;
@@ -747,8 +753,6 @@
         self.previewImageView.hidden = NO;
     else
         self.previewImageView.hidden = YES;
-    
-    NSLog(@"Flipped it good.");
 }
 
 - (void)use {
@@ -765,28 +769,12 @@
 }
 
 + (UIImageOrientation)currentImageOrientation:(UIDeviceOrientation)deviceOrientation {
-    // This is weird, but it works
-    // By all means fix it, but make sure to test it afterwards
-    UIImageOrientation imageOrientation = UIImageOrientationRight;
 
-    switch (deviceOrientation) {
-        case UIDeviceOrientationLandscapeLeft:
-            imageOrientation = UIImageOrientationDown;
-            break;
-
-        case UIDeviceOrientationLandscapeRight:
-            imageOrientation = UIImageOrientationUp;
-            break;
-
-        case UIDeviceOrientationPortraitUpsideDown:
-            imageOrientation = UIImageOrientationLeft;
-            break;
-
-        default:
-            break;
-    }
-
-    return imageOrientation;
+    // This function was gutted because it didn't work well.  Now it always returns
+    // the same orientation, placing the burden on the user to get the orientation
+    // correct (landscape or portrait).
+    
+    return UIImageOrientationRight;
 }
 
 @end

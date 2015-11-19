@@ -89,7 +89,7 @@
     imagePicker = [[JPSImagePickerController alloc] init];
 	imagePicker.delegate = self;
     imagePicker.flashlightEnabled = NO;
-    imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera;
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
 
     int left_edge = 440;
     
@@ -199,7 +199,7 @@
     return newImage;
 }
 
-// This function is called once a photo is picked from the camera roll AND once the user presses blue "Use" button on the camera interface.
+// This function is called once a photo is picked from the camera roll
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     // If the app is in camera roll mode,...
@@ -207,127 +207,17 @@
     {
         // Get the image, whatever it is.
         UIImage* img  = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-        
+            
         // Make a path to the 'NOW' image.
         NSString  *pngPath;
-        
+            
         // simply write it back to the Documents folder so app can load it into overlay.
         pngPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Then.png"];
         [UIImagePNGRepresentation(img) writeToFile:pngPath atomically:YES];
-        
+            
         // Dismiss the picker
         [self dismissModalViewControllerAnimated:YES];
     }
-    else // send both images to the photo sharing website, as well as the latitute and longitude
-    {
-    
-        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        spinner.hidesWhenStopped = YES;
-        spinner.center = CGPointMake(160, 240);
-        spinner.tag = 12;
-        [imagePicker.view addSubview: spinner];
-        [spinner startAnimating];
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
-            // we're on a secondary thread, do expensive computation here
-            // when we're done, we schedule another block to run on the main thread
-            
-            // get current date/time up to the millisecond
-            NSDate *currentTime = [NSDate date];
-            NSTimeInterval inter = [currentTime timeIntervalSince1970];
-            NSString *timestamp = [NSString stringWithFormat:@"%f", inter];
-            
-            // Get the image, whatever it is.
-            UIImage* img  = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-            
-            [locationManager stopUpdatingLocation];
-            
-            CGSize newSize = CGSizeMake(600,480);
-            
-            // this is a NOW image ... send it first, after resizing it
-            img = [self imageWithImage:img scaledToSize:newSize];
-            
-            // get the data to send
-            NSData *imageDataNOW = UIImagePNGRepresentation(img);
-            NSString *domain = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppDomainName"];
-        
-            //NSLog(@"Domain Name: %@", domain);
-            
-            // get the url of the Now and Then page that stores NOW photos.
-            NSString *urlString = [NSString stringWithFormat:@"http://%@.com/storenowphoto.php?createdAt=%@", domain, timestamp];
-                
-            // Build the request and send the image.
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:[NSURL URLWithString:urlString]];
-            [request setHTTPMethod:@"POST"];
-            
-            NSString *boundary = [[NSString alloc] initWithString: [[NSProcessInfo processInfo] globallyUniqueString]];
-            NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-            [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-            
-            NSMutableData *body = [NSMutableData data];
-            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"now.png\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[NSData dataWithData:imageDataNOW]];
-            [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [request setHTTPBody:body];
-                
-            NSData *returnDataNOW = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-            
-            NSString *returnStringNOW = [[NSString alloc] initWithData:returnDataNOW encoding:NSUTF8StringEncoding];
-            
-            //NSLog(@"ReturnString NOW: %@", returnStringNOW);
-        
-            // next send the THEN image.  First get the image saved previously...
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *documentsDirectory = [paths objectAtIndex:0];
-            NSString* path = [documentsDirectory stringByAppendingPathComponent:@"Then.png"];
-            
-            UIImage* imageTHEN = [UIImage imageWithContentsOfFile:path]; //this works
-            
-            imageTHEN = [self imageWithImage:imageTHEN scaledToSize:newSize];
-            
-            NSData *imageDataTHEN = UIImagePNGRepresentation(imageTHEN);
-            
-            NSString *urlStringTHEN = [NSString stringWithFormat:@"http://%@.com/storethenphoto.php?createdAt=%@", domain, timestamp];
-            
-            NSMutableURLRequest *requestTHEN = [[NSMutableURLRequest alloc] init];
-            [requestTHEN setURL:[NSURL URLWithString:urlStringTHEN]];
-            [requestTHEN setHTTPMethod:@"POST"];
-                
-            NSString *boundaryTHEN = [[NSString alloc] initWithString: [[NSProcessInfo processInfo] globallyUniqueString]];
-            NSString *contentTypeTHEN = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundaryTHEN];
-            [requestTHEN addValue:contentTypeTHEN forHTTPHeaderField: @"Content-Type"];
-            
-            NSMutableData *bodyTHEN = [NSMutableData data];
-            [bodyTHEN appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundaryTHEN] dataUsingEncoding:NSUTF8StringEncoding]];
-            [bodyTHEN appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"Then.png\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-            [bodyTHEN appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-            [bodyTHEN appendData:[NSData dataWithData:imageDataTHEN]];
-            [bodyTHEN appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundaryTHEN] dataUsingEncoding:NSUTF8StringEncoding]];
-            [requestTHEN setHTTPBody:bodyTHEN];
-        
-            NSData *returnDataTHEN = [NSURLConnection sendSynchronousRequest:requestTHEN returningResponse:nil error:nil];
-            NSString *returnStringTHEN = [[NSString alloc] initWithData:returnDataTHEN encoding:NSUTF8StringEncoding];
-            
-            NSLog(@"ReturnString THEN: %@", returnStringTHEN);
-            
-            NSString *urlStringPLACE = [NSString stringWithFormat:@"http://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
-            
-            [NSData dataWithContentsOfURL: [NSURL URLWithString:urlStringPLACE]];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // this code is back on the main thread, where it's safe to mess with the GUI
-                [spinner stopAnimating];
-                
-                // Dismiss the picker
-                [self dismissModalViewControllerAnimated:YES];
-            });
-        });
-    }
-
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -411,7 +301,7 @@ finishedSavingWithError:(NSError *)error
     [self.view addSubview:pickerButton];
       
     // add button to show instructions
-    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(80, 160, 160, 63)];
+    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(80, 160, 160, 48)];
     [infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
     [infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:infoIcon];
@@ -421,7 +311,7 @@ finishedSavingWithError:(NSError *)error
 }
 
 - (void)picker:(JPSImagePickerController *)picker didTakePicture:(UIImage *)picture {
-    picker.confirmationString = @"Zoom in to make sure you're happy with your picture";
+    picker.confirmationString = @"Zoom in to inspect picture detail.";
     picker.confirmationOverlayString = @"Analyzing Image...";
     picker.confirmationOverlayBackgroundColor = [UIColor orangeColor];
     double delayInSeconds = 1;
@@ -434,6 +324,98 @@ finishedSavingWithError:(NSError *)error
 
 - (void)picker:(JPSImagePickerController *)picker didConfirmPicture:(UIImage *)picture {
     self.imageView.image = picture;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
+        // we're on a secondary thread, do expensive computation here
+        // when we're done, we schedule another block to run on the main thread
+        
+        // get current date/time up to the millisecond
+        NSDate *currentTime = [NSDate date];
+        NSTimeInterval inter = [currentTime timeIntervalSince1970];
+        NSString *timestamp = [NSString stringWithFormat:@"%f", inter];
+        
+        // Get the image, whatever it is.
+        UIImage* img  = picture;
+        
+        [locationManager stopUpdatingLocation];
+        
+        CGSize newSize = CGSizeMake(600,480);
+        
+        // this is a NOW image ... send it first, after resizing it
+        img = [self imageWithImage:img scaledToSize:newSize];
+        
+        // get the data to send
+        NSData *imageDataNOW = UIImagePNGRepresentation(img);
+        NSString *domain = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppDomainName"];
+        
+        //NSLog(@"Domain Name: %@", domain);
+        
+        // get the url of the Now and Then page that stores NOW photos.
+        NSString *urlString = [NSString stringWithFormat:@"http://%@.com/storenowphoto.php?createdAt=%@", domain, timestamp];
+        
+        // Build the request and send the image.
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:[NSURL URLWithString:urlString]];
+        [request setHTTPMethod:@"POST"];
+        
+        NSString *boundary = [[NSString alloc] initWithString: [[NSProcessInfo processInfo] globallyUniqueString]];
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+        [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+        
+        NSMutableData *body = [NSMutableData data];
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"now.png\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[NSData dataWithData:imageDataNOW]];
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [request setHTTPBody:body];
+        
+        NSData *returnDataNOW = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        
+        NSString *returnStringNOW = [[NSString alloc] initWithData:returnDataNOW encoding:NSUTF8StringEncoding];
+        
+        //NSLog(@"ReturnString NOW: %@", returnStringNOW);
+        
+        // next send the THEN image.  First get the image saved previously...
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString* path = [documentsDirectory stringByAppendingPathComponent:@"Then.png"];
+        
+        UIImage* imageTHEN = [UIImage imageWithContentsOfFile:path]; //this works
+        
+        imageTHEN = [self imageWithImage:imageTHEN scaledToSize:newSize];
+        
+        NSData *imageDataTHEN = UIImagePNGRepresentation(imageTHEN);
+        
+        NSString *urlStringTHEN = [NSString stringWithFormat:@"http://%@.com/storethenphoto.php?createdAt=%@", domain, timestamp];
+        
+        NSMutableURLRequest *requestTHEN = [[NSMutableURLRequest alloc] init];
+        [requestTHEN setURL:[NSURL URLWithString:urlStringTHEN]];
+        [requestTHEN setHTTPMethod:@"POST"];
+        
+        NSString *boundaryTHEN = [[NSString alloc] initWithString: [[NSProcessInfo processInfo] globallyUniqueString]];
+        NSString *contentTypeTHEN = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundaryTHEN];
+        [requestTHEN addValue:contentTypeTHEN forHTTPHeaderField: @"Content-Type"];
+        
+        NSMutableData *bodyTHEN = [NSMutableData data];
+        [bodyTHEN appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundaryTHEN] dataUsingEncoding:NSUTF8StringEncoding]];
+        [bodyTHEN appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"Then.png\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [bodyTHEN appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [bodyTHEN appendData:[NSData dataWithData:imageDataTHEN]];
+        [bodyTHEN appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundaryTHEN] dataUsingEncoding:NSUTF8StringEncoding]];
+        [requestTHEN setHTTPBody:bodyTHEN];
+        
+        NSData *returnDataTHEN = [NSURLConnection sendSynchronousRequest:requestTHEN returningResponse:nil error:nil];
+        NSString *returnStringTHEN = [[NSString alloc] initWithData:returnDataTHEN encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"ReturnString THEN: %@", returnStringTHEN);
+        
+        NSString *urlStringPLACE = [NSString stringWithFormat:@"http://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
+        
+        [NSData dataWithContentsOfURL: [NSURL URLWithString:urlStringPLACE]];
+        
+    });
 }
 
 - (void)pickerDidCancel:(JPSImagePickerController *)picker {

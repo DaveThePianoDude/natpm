@@ -12,18 +12,15 @@
 
 @synthesize window, vc;
 
-- (BOOL)application:(UIApplication *)application
+- (void)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    
-    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [FBAppEvents activateApp];
-    [FBAppCall handleDidBecomeActive];
+
 }
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application 
