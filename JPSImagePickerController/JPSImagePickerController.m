@@ -692,7 +692,7 @@
                                                               toItem:self.capturePreviewView
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:0.9f
-                                                            constant:0];
+                                                            constant:-12.0];
     [self.view addConstraints:@[centerX, width, top]];
 }
 

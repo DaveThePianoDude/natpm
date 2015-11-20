@@ -11,10 +11,13 @@
 
 #define radians(degrees) (degrees * M_PI/180)
 
-#define BORDER_MARGIN 0.05
+#define BORDER_MARGIN_HEIGHT 0.05
+#define BORDER_MARGIN_WIDTH 0.05
 
 #import "OverlayView.h"
 #import "test_appAppDelegate.h"
+
+#include <sys/utsname.h>
 
 @implementation OverlayView
 
@@ -30,14 +33,11 @@
     newR.size.height = 50;
     
     if (self = [super initWithFrame:newR]) {
-        
-        // clear the background color of the overlay
-        //self.opaque = NO;
-        //self.alpha = 1.0;
-        //self.backgroundColor = [UIColor clearColor];
 
         // get screen dimensions and total span of height in pixls
         double screenHeight = [[UIScreen mainScreen] bounds].size.width; // flip this for landscape mode
+        
+        double screenWidth = [[UIScreen mainScreen] bounds].size.height; // flip this for landscape mode
 
         // load an image to show in the overlay
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -52,22 +52,42 @@
         
         // find out how much one needs to shrink or expand the original image to fit the screen vertically (by height)
         double heightFraction = screenHeight / thenImageSize.height;
+        double widthFraction = screenWidth / thenImageSize.width;
         
         // adjust the original then image height and add on some margin
-        double newScreenHeight = thenImageSize.height * heightFraction + (thenImageSize.height * heightFraction * BORDER_MARGIN);
+        double newScreenHeight = thenImageSize.height * heightFraction + (thenImageSize.height * heightFraction * BORDER_MARGIN_HEIGHT);
         
         // do the same for the screen width
-        double newScreenWidth = thenImageSize.width * heightFraction + (thenImageSize.width * heightFraction * BORDER_MARGIN);
+        double newScreenWidth = thenImageSize.width * heightFraction + (thenImageSize.width * widthFraction * BORDER_MARGIN_WIDTH);
+        
+        NSLog(@"ScreenWidth=%f", screenHeight);
+        NSLog(@"ScreenHeight=%f", [[UIScreen mainScreen] bounds].size.height);
+        NSLog(@"ImageWidth=%f", thenImage.size.width);
+        NSLog(@"ImageHeight=%f", thenImage.size.height);
+    
+        float horizontalTranslation = 11;
+        
+        NSString* messageHardwareType = nil;
+        struct utsname platform;
+        int rc = uname(&platform);
+        
+        if (rc != -1)
+        {
+            messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
+            
+            if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
+                
+                horizontalTranslation = 0;
+        }
         
         // create a new size object for then image, fit into the
         CGSize newSize = CGSizeMake(newScreenWidth, newScreenHeight);
-        UIGraphicsBeginImageContext(CGSizeMake(1000, 800));
+        UIGraphicsBeginImageContext(CGSizeMake(screenWidth, screenWidth * 0.9));
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextTranslateCTM(context, newScreenHeight, 50);
+        CGContextTranslateCTM(context, newScreenHeight,horizontalTranslation);
         CGContextRotateCTM (context, radians(90));
         
         // create a new image that fits exactly within the iPhone's screen frame...
-        
         [thenImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeOverlay alpha:trans];
         
         // get the transformed image from the context

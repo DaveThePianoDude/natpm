@@ -12,9 +12,12 @@
 
 @interface test_appViewController : UIViewController  <UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
 {
-	UIButton *button;
+	UIButton *activatorButton;
     UIButton *pickerButton;
     UIButton *infoIcon;
+    
+    int frameWidth;
+    int frameHeight;
     
     UISlider *transparencySlider;
     JPSImagePickerController *imagePicker;

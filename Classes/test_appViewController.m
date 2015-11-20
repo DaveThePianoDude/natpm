@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSString*  LATITUDE;
 @property (strong, nonatomic) NSString*  LONGITUDE;
 
-@property (nonatomic, strong) UIButton    *button;
+@property (nonatomic, strong) UIButton    *activatorButton;
 @property (nonatomic, strong) UIImageView *imageView;
 
 @end
@@ -50,18 +50,6 @@
     _imageView.translatesAutoresizingMaskIntoConstraints = NO;
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:_imageView];
-    
-    // Constraints
-    NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_button][_imageView]|"
-                                                                options:0
-                                                                metrics:nil
-                                                                  views:NSDictionaryOfVariableBindings(_button, _imageView)];
-    NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:@"|[_imageView]|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:NSDictionaryOfVariableBindings(_imageView)];
-    [self.view addConstraints:vertical];
-    [self.view addConstraints:horizontal];
 }
 
 - (void)viewDidUnload {
@@ -91,25 +79,23 @@
     imagePicker.flashlightEnabled = NO;
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
 
-    int left_edge = 440;
+    int slider_margin = frameWidth * .267;
     
     NSString* messageHardwareType = nil;
-    
     struct utsname platform;
-    
     int rc = uname(&platform);
     
     if (rc != -1)
     {
         messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
         
-        if ([messageHardwareType rangeOfString:@"iPad"].location == NSNotFound)
-            
-        {} else left_edge=400;
+        if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
+
+            slider_margin = frameWidth * .113;
     }
     
     // make the transparency slider, starting with the frame
-    CGRect sliderFrame = CGRectMake(0,left_edge,320,40);
+    CGRect sliderFrame = CGRectMake(0,frameHeight - slider_margin,frameWidth,40);
     
     transparencySlider = [[UISlider alloc]initWithFrame:sliderFrame];
     transparencySlider.minimumValue = 0;
@@ -147,7 +133,7 @@
     
     float sliderValue = transparencySlider.value;
     
-    [imagePicker dismissModalViewControllerAnimated: NO];
+    [imagePicker dismissViewControllerAnimated: NO completion:nil];
     
     // make another custom view
     OverlayView *overlayview = [[OverlayView alloc] initWithParams: self.view.frame : matchingImage : sliderValue];
@@ -157,7 +143,7 @@
     // lay it over the image picker view
     [imagePicker.view addSubview:overlayview];
     
-    [self presentModalViewController:imagePicker animated:NO];
+    [self presentViewController:imagePicker animated:NO completion:nil];
 }
 
 // This function is called when the image picker is invoked as an actual image picker!
@@ -171,14 +157,14 @@
 	imagePicker.delegate = self;
     
     // Show image picker
-	[self presentModalViewController:imagePicker animated:YES];
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 - (void)infoButtonPressed:(UIButton *)button
 {
      NSString *domain = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppDomainName"];
     
-        NSString *message = [NSString stringWithFormat:@"1. Pick a historic photo of a favorite place from your Camera Roll. 2. Go to that place.  3. Activate the camera and adjust transparency using the slider while matching up the historic photo with the current scene.  4. Take a new photo and press 'USE' to share with your friends at http://%@.com !", domain];
+        NSString *message = [NSString stringWithFormat:@"1. Pick an old photo of a favorite person or place from your Camera Roll. 2. Go to that place or person.  3. Activate the camera and adjust transparency using the slider while matching up the historic photo with the current scene.  4. Take a new photo and press 'USE' to share with your friends at http://%@.com !", domain];
     
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle: @"Instructions:"
@@ -216,7 +202,7 @@
         [UIImagePNGRepresentation(img) writeToFile:pngPath atomically:YES];
             
         // Dismiss the picker
-        [self dismissModalViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -280,6 +266,10 @@ finishedSavingWithError:(NSError *)error
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
       
+    // get some frame measurements for use later
+    frameWidth = self.view.frame.size.width;
+    frameHeight = self.view.frame.size.height;
+      
     // do some animation
     [UIView animateWithDuration:1.5
                        animations:^{imageView.alpha = 0;}
@@ -289,29 +279,88 @@ finishedSavingWithError:(NSError *)error
                        }];
 
     // add button to activate camera
-    button = [[UIButton alloc] initWithFrame:CGRectMake(5, 480, 160, 63)];
-    [button setBackgroundImage:[UIImage imageNamed:@"Camera.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];      
-    [self.view addSubview:button];
+    activatorButton = [UIButton buttonWithType:UIButtonTypeSystem];
+      
+    [activatorButton setBackgroundImage:[UIImage imageNamed:@"Camera.png"] forState:UIControlStateNormal];
+    activatorButton.translatesAutoresizingMaskIntoConstraints = NO;
+      
+    [activatorButton addTarget:self action:@selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];      
+    [self.view addSubview:activatorButton];
+      
+    NSLayoutConstraint *leftActivator = [NSLayoutConstraint constraintWithItem:activatorButton
+                                                              attribute:NSLayoutAttributeLeft
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeLeft
+                                                             multiplier:1.0f
+                                                               constant:frameWidth/57.2];
+    NSLayoutConstraint *bottomActivator = [NSLayoutConstraint constraintWithItem:activatorButton
+                                                                attribute:NSLayoutAttributeBottom
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1.0f
+                                                                 constant:-frameHeight/18.3];
+    [self.view addConstraints:@[leftActivator, bottomActivator]];
       
     // add button to activate gallery image picker
-    pickerButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 480, 160, 63)];
+    pickerButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [pickerButton setBackgroundImage:[UIImage imageNamed:@"Gallery.png"] forState:UIControlStateNormal];
+    pickerButton.translatesAutoresizingMaskIntoConstraints = NO;
+      
     [pickerButton addTarget:self action:@selector(pickerButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:pickerButton];
       
+    NSLayoutConstraint *rightPicker = [NSLayoutConstraint constraintWithItem:pickerButton
+                                                              attribute:NSLayoutAttributeRight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeRight
+                                                             multiplier:1.0f
+                                                               constant:-frameWidth/57.2];
+      
+    NSLayoutConstraint *bottomPicker = [NSLayoutConstraint constraintWithItem:pickerButton
+                                                                attribute:NSLayoutAttributeBottom
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1.0f
+                                                                 constant:-frameHeight/18.3];
+      
+    [self.view addConstraints:@[rightPicker, bottomPicker]];
+    
     // add button to show instructions
-    infoIcon = [[UIButton alloc] initWithFrame:CGRectMake(80, 160, 160, 48)];
+    infoIcon = [UIButton buttonWithType:UIButtonTypeSystem];
     [infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
+    infoIcon.translatesAutoresizingMaskIntoConstraints = NO;
+      
     [infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:infoIcon];
+      
+    NSLayoutConstraint *centerInfoX = [NSLayoutConstraint constraintWithItem:infoIcon
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                    multiplier:1.0f
+                                                                      constant:0];
+    
+    NSLayoutConstraint *centerInfoY = [NSLayoutConstraint constraintWithItem:infoIcon
+                                                                      attribute:NSLayoutAttributeCenterY
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.view
+                                                                      attribute:NSLayoutAttributeCenterY
+                                                                     multiplier:1.0f
+                                                                       constant:-frameHeight/6];
+    [self.view addConstraints:@[centerInfoX, centerInfoY]];
+      
   }
     
   return self;
 }
 
 - (void)picker:(JPSImagePickerController *)picker didTakePicture:(UIImage *)picture {
-    picker.confirmationString = @"Zoom in to inspect picture detail.";
+    picker.confirmationString = @"Zoom in to inspect picture detail.\rUse FLIP to check that the photos line up.";
     picker.confirmationOverlayString = @"Analyzing Image...";
     picker.confirmationOverlayBackgroundColor = [UIColor orangeColor];
     double delayInSeconds = 1;
@@ -371,10 +420,8 @@ finishedSavingWithError:(NSError *)error
         [request setHTTPBody:body];
         
         NSData *returnDataNOW = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        
         NSString *returnStringNOW = [[NSString alloc] initWithData:returnDataNOW encoding:NSUTF8StringEncoding];
-        
-        //NSLog(@"ReturnString NOW: %@", returnStringNOW);
+        NSLog(@"ReturnString NOW: %@", returnStringNOW);
         
         // next send the THEN image.  First get the image saved previously...
         
