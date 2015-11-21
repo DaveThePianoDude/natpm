@@ -157,8 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				0878375F18254AE5004AA3B6 /* NetworkPhotoAlbum_Prefix.pch */,
-				088007241819398F0063FBC7 /* CoreLocation.framework */,
 				081C289917EE7227003A90F9 /* time_machine_76.png */,
+				088007241819398F0063FBC7 /* CoreLocation.framework */,
 				081C289A17EE7227003A90F9 /* time_machine_120.png */,
 				081C289B17EE7227003A90F9 /* time_machine_152.png */,
 				083CD3CE17A40D9300AA00EC /* time_machine.png */,

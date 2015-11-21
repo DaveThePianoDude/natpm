@@ -117,7 +117,7 @@
     
     // show all
 	//[self presentModalViewController:imagePicker animated:YES];
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    [self presentModalViewController:imagePicker animated:YES];
 }
 
 // the slider calls this event handler once its position has changed
@@ -133,7 +133,7 @@
     
     float sliderValue = transparencySlider.value;
     
-    [imagePicker dismissViewControllerAnimated: NO completion:nil];
+    [imagePicker dismissModalViewControllerAnimated: NO];
     
     // make another custom view
     OverlayView *overlayview = [[OverlayView alloc] initWithParams: self.view.frame : matchingImage : sliderValue];
@@ -143,7 +143,7 @@
     // lay it over the image picker view
     [imagePicker.view addSubview:overlayview];
     
-    [self presentViewController:imagePicker animated:NO completion:nil];
+    [self presentModalViewController:imagePicker animated:NO];
 }
 
 // This function is called when the image picker is invoked as an actual image picker!
@@ -157,7 +157,7 @@
 	imagePicker.delegate = self;
     
     // Show image picker
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    [self presentModalViewController:imagePicker animated:YES];
 }
 
 - (void)infoButtonPressed:(UIButton *)button
@@ -202,7 +202,7 @@
         [UIImagePNGRepresentation(img) writeToFile:pngPath atomically:YES];
             
         // Dismiss the picker
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissModalViewControllerAnimated:YES ];
     }
 }
 
@@ -390,6 +390,10 @@ finishedSavingWithError:(NSError *)error
         
         CGSize newSize = CGSizeMake(600,480);
         
+        img = [[UIImage alloc] initWithCGImage: img.CGImage
+                                         scale: 1.0
+                                   orientation: UIImageOrientationUp];
+        
         // this is a NOW image ... send it first, after resizing it
         img = [self imageWithImage:img scaledToSize:newSize];
         
@@ -466,7 +470,7 @@ finishedSavingWithError:(NSError *)error
 }
 
 - (void)pickerDidCancel:(JPSImagePickerController *)picker {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)dealloc
