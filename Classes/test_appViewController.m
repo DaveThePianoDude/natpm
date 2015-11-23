@@ -435,6 +435,11 @@ finishedSavingWithError:(NSError *)error
         
         UIImage* imageTHEN = [UIImage imageWithContentsOfFile:path]; //this works
         
+        imageTHEN = [[UIImage alloc] initWithCGImage: imageTHEN.CGImage
+                                         scale: 1.0
+                                   orientation: UIImageOrientationUp];
+
+        
         imageTHEN = [self imageWithImage:imageTHEN scaledToSize:newSize];
         
         NSData *imageDataTHEN = UIImagePNGRepresentation(imageTHEN);

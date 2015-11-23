@@ -65,7 +65,7 @@
         NSLog(@"ImageWidth=%f", thenImage.size.width);
         NSLog(@"ImageHeight=%f", thenImage.size.height);
     
-        float horizontalTranslation = 11;
+        float horizontalTranslation = 40;
         
         NSString* messageHardwareType = nil;
         struct utsname platform;

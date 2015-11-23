@@ -11,6 +11,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "JPSVolumeButtonHandler.h"
 
+#include <sys/utsname.h>
+
 @interface JPSImagePickerController () <UIScrollViewDelegate>
 
 // Camera
@@ -400,17 +402,47 @@
 
                                             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                                             self.imageOrientation = [JPSImagePickerController currentImageOrientation:self.deviceOrientation];
-
+                                            
                                             UIImage *image = [UIImage imageWithCGImage:[[[UIImage alloc] initWithData:imageData] CGImage]
-                                                                                 scale:1.0f
+                                                                           scale:1.0f
                                                                            orientation:self.imageOrientation];
-
+                                            
+                                            
+                                            NSString* messageHardwareType = nil;
+                                            struct utsname platform;
+                                            int rc = uname(&platform);
+                                            
+                                            if (rc != -1)
+                                            {
+                                                messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
+                                                
+                                                if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
+                                                {
+                                                    // create a new size object for then image, fit into the
+                                                    CGSize newSize = CGSizeMake(900,1200);
+                                                    UIGraphicsBeginImageContext(CGSizeMake(900,1200));
+                                                    CGContextRef context = UIGraphicsGetCurrentContext();
+                                                    CGContextTranslateCTM(context,-90,-120);
+                                                    CGContextScaleCTM(context, 1.2, 1.2);
+                                                
+                                                    // create a new image that fits exactly within the iPhone's screen frame...
+                                                    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+                                                
+                                                    // get the transformed image from the context
+                                                    image = UIGraphicsGetImageFromCurrentImageContext();
+                                                
+                                                    UIGraphicsEndImageContext();
+                                                }
+                                            }
+                                            
                                             self.previewImage = image;
+                                            
                                             if (self.editingEnabled) {
                                                 [self showPreview];
                                             } else {
                                                 [self dismiss];
                                             }
+                                            
                                             if ([self.delegate respondsToSelector:@selector(picker:didTakePicture:)]) {
                                                 [self.delegate picker:self didTakePicture:image];
                                             }
