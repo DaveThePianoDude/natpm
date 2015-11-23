@@ -25,7 +25,6 @@
 @property (strong, nonatomic) NSString*  LATITUDE;
 @property (strong, nonatomic) NSString*  LONGITUDE;
 
-@property (nonatomic, strong) UIButton    *activatorButton;
 @property (nonatomic, strong) UIImageView *imageView;
 
 @end
@@ -40,7 +39,6 @@
  
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    //[self setupButton];
     [self setupImageView];
 }
 
@@ -117,7 +115,7 @@
     
     // show all
 	//[self presentModalViewController:imagePicker animated:YES];
-    [self presentModalViewController:imagePicker animated:YES];
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 // the slider calls this event handler once its position has changed
@@ -133,7 +131,7 @@
     
     float sliderValue = transparencySlider.value;
     
-    [imagePicker dismissModalViewControllerAnimated: NO];
+    [imagePicker dismissViewControllerAnimated: NO completion: nil];
     
     // make another custom view
     OverlayView *overlayview = [[OverlayView alloc] initWithParams: self.view.frame : matchingImage : sliderValue];
@@ -143,7 +141,7 @@
     // lay it over the image picker view
     [imagePicker.view addSubview:overlayview];
     
-    [self presentModalViewController:imagePicker animated:NO];
+    [self presentViewController:imagePicker animated:NO completion:nil];
 }
 
 // This function is called when the image picker is invoked as an actual image picker!
@@ -157,7 +155,7 @@
 	imagePicker.delegate = self;
     
     // Show image picker
-    [self presentModalViewController:imagePicker animated:YES];
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 - (void)infoButtonPressed:(UIButton *)button
@@ -202,7 +200,7 @@
         [UIImagePNGRepresentation(img) writeToFile:pngPath atomically:YES];
             
         // Dismiss the picker
-        [self dismissModalViewControllerAnimated:YES ];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -331,7 +329,7 @@ finishedSavingWithError:(NSError *)error
     
     // add button to show instructions
     infoIcon = [UIButton buttonWithType:UIButtonTypeSystem];
-    [infoIcon setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
+    [infoIcon setBackgroundImage:[UIImage imageNamed:@"Instructions.png"] forState:UIControlStateNormal];
     infoIcon.translatesAutoresizingMaskIntoConstraints = NO;
       
     [infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
@@ -390,9 +388,24 @@ finishedSavingWithError:(NSError *)error
         
         CGSize newSize = CGSizeMake(600,480);
         
+        UIImageOrientation orient = UIImageOrientationUp;
+        
+        NSString* messageHardwareType = nil;
+        struct utsname platform;
+        
+        if (uname(&platform) != -1)
+        {
+            messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
+            
+            if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
+            {
+                orient = UIImageOrientationLeft;
+            }
+        }
+        
         img = [[UIImage alloc] initWithCGImage: img.CGImage
                                          scale: 1.0
-                                   orientation: UIImageOrientationUp];
+                                   orientation: orient];
         
         // this is a NOW image ... send it first, after resizing it
         img = [self imageWithImage:img scaledToSize:newSize];
@@ -475,7 +488,7 @@ finishedSavingWithError:(NSError *)error
 }
 
 - (void)pickerDidCancel:(JPSImagePickerController *)picker {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)dealloc

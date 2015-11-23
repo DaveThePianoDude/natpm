@@ -11,7 +11,7 @@
 		081C289C17EE7227003A90F9 /* time_machine_76.png in Resources */ = {isa = PBXBuildFile; fileRef = 081C289917EE7227003A90F9 /* time_machine_76.png */; };
 		081C289D17EE7227003A90F9 /* time_machine_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 081C289A17EE7227003A90F9 /* time_machine_120.png */; };
 		081C289E17EE7227003A90F9 /* time_machine_152.png in Resources */ = {isa = PBXBuildFile; fileRef = 081C289B17EE7227003A90F9 /* time_machine_152.png */; };
-		08324C7817D6D2AB00ED4CD2 /* Facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 08324C7717D6D2AB00ED4CD2 /* Facebook.png */; };
+		08324C7817D6D2AB00ED4CD2 /* Instructions.png in Resources */ = {isa = PBXBuildFile; fileRef = 08324C7717D6D2AB00ED4CD2 /* Instructions.png */; };
 		0838AEF9179F4EF80005C015 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0838AEF8179F4EF80005C015 /* OverlayView.m */; };
 		0838AEFB179F4FFD0005C015 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0838AEFA179F4FFD0005C015 /* Default-568h@2x.png */; };
 		083CD3CF17A40D9300AA00EC /* time_machine.png in Resources */ = {isa = PBXBuildFile; fileRef = 083CD3CE17A40D9300AA00EC /* time_machine.png */; };
@@ -28,7 +28,6 @@
 		08A1814517A2036100E65D0A /* Gallery.png in Resources */ = {isa = PBXBuildFile; fileRef = 08A1814417A2036100E65D0A /* Gallery.png */; };
 		08B65B5717EE1C490026755B /* SecondTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B65B5617EE1C490026755B /* SecondTitleView.m */; };
 		08B65B5917EE1E610026755B /* NowAndThen_Cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B65B5817EE1E610026755B /* NowAndThen_Cover.png */; };
-		08FEF13417EE377E00BD2B1A /* info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 08FEF13317EE377E00BD2B1A /* info-icon.png */; };
 		1D3623260D0F684500981E51 /* test_appAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* test_appAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -48,7 +47,7 @@
 		081C289917EE7227003A90F9 /* time_machine_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time_machine_76.png; sourceTree = "<group>"; };
 		081C289A17EE7227003A90F9 /* time_machine_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time_machine_120.png; sourceTree = "<group>"; };
 		081C289B17EE7227003A90F9 /* time_machine_152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time_machine_152.png; sourceTree = "<group>"; };
-		08324C7717D6D2AB00ED4CD2 /* Facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Facebook.png; sourceTree = "<group>"; };
+		08324C7717D6D2AB00ED4CD2 /* Instructions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Instructions.png; sourceTree = "<group>"; };
 		0838AEF7179F4EF80005C015 /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
 		0838AEF8179F4EF80005C015 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
 		0838AEFA179F4FFD0005C015 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -72,7 +71,6 @@
 		08B65B5517EE1C490026755B /* SecondTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondTitleView.h; sourceTree = "<group>"; };
 		08B65B5617EE1C490026755B /* SecondTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondTitleView.m; sourceTree = "<group>"; };
 		08B65B5817EE1E610026755B /* NowAndThen_Cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NowAndThen_Cover.png; sourceTree = "<group>"; };
-		08FEF13317EE377E00BD2B1A /* info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-icon.png"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* test_appAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test_appAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* test_appAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_appAppDelegate.m; sourceTree = "<group>"; };
@@ -188,10 +186,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				08FEF13317EE377E00BD2B1A /* info-icon.png */,
 				08B65B5817EE1E610026755B /* NowAndThen_Cover.png */,
 				0866B7FC17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png */,
-				08324C7717D6D2AB00ED4CD2 /* Facebook.png */,
+				08324C7717D6D2AB00ED4CD2 /* Instructions.png */,
 				08A1814417A2036100E65D0A /* Gallery.png */,
 				52704E9D11376A3000BEF866 /* Camera.png */,
 				8D1107310486CEB800E47090 /* test_app-Info.plist */,
@@ -275,10 +272,9 @@
 				08A1814517A2036100E65D0A /* Gallery.png in Resources */,
 				089D44C41BFBCA4E00A5806E /* JPSImagePickerController.bundle in Resources */,
 				083CD3CF17A40D9300AA00EC /* time_machine.png in Resources */,
-				08324C7817D6D2AB00ED4CD2 /* Facebook.png in Resources */,
+				08324C7817D6D2AB00ED4CD2 /* Instructions.png in Resources */,
 				0866B7FD17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png in Resources */,
 				08B65B5917EE1E610026755B /* NowAndThen_Cover.png in Resources */,
-				08FEF13417EE377E00BD2B1A /* info-icon.png in Resources */,
 				081C289817EE6A28003A90F9 /* time_machine_bgr.png in Resources */,
 				081C289C17EE7227003A90F9 /* time_machine_76.png in Resources */,
 				081C289D17EE7227003A90F9 /* time_machine_120.png in Resources */,

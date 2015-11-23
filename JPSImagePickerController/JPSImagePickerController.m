@@ -389,6 +389,23 @@
 
 #pragma mark - Actions
 
+- (void)ScaleImageToFitIpad:(UIImage **)image_p {
+    // create a new size object for then image, fit into the
+    CGSize newSize = CGSizeMake(900,1200);
+    UIGraphicsBeginImageContext(CGSizeMake(900,1200));
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(context,-90,-120);
+    CGContextScaleCTM(context, 1.2, 1.2);
+    
+    // create a new image that fits exactly within the iPhone's screen frame...
+    [*image_p drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // get the transformed image from the context
+    *image_p = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+}
+
 - (void)takePicture {
     if (!self.cameraButton.enabled) return;
 
@@ -397,56 +414,45 @@
     if (!videoConnection) return;
 
     [output captureStillImageAsynchronouslyFromConnection:videoConnection
-                                        completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-                                            if (!imageDataSampleBuffer || error) return;
+     
+        completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+            
+            if (!imageDataSampleBuffer || error) return;
 
-                                            NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                                            self.imageOrientation = [JPSImagePickerController currentImageOrientation:self.deviceOrientation];
-                                            
-                                            UIImage *image = [UIImage imageWithCGImage:[[[UIImage alloc] initWithData:imageData] CGImage]
-                                                                           scale:1.0f
-                                                                           orientation:self.imageOrientation];
-                                            
-                                            
-                                            NSString* messageHardwareType = nil;
-                                            struct utsname platform;
-                                            int rc = uname(&platform);
-                                            
-                                            if (rc != -1)
-                                            {
-                                                messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
-                                                
-                                                if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
-                                                {
-                                                    // create a new size object for then image, fit into the
-                                                    CGSize newSize = CGSizeMake(900,1200);
-                                                    UIGraphicsBeginImageContext(CGSizeMake(900,1200));
-                                                    CGContextRef context = UIGraphicsGetCurrentContext();
-                                                    CGContextTranslateCTM(context,-90,-120);
-                                                    CGContextScaleCTM(context, 1.2, 1.2);
-                                                
-                                                    // create a new image that fits exactly within the iPhone's screen frame...
-                                                    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-                                                
-                                                    // get the transformed image from the context
-                                                    image = UIGraphicsGetImageFromCurrentImageContext();
-                                                
-                                                    UIGraphicsEndImageContext();
-                                                }
-                                            }
-                                            
-                                            self.previewImage = image;
-                                            
-                                            if (self.editingEnabled) {
-                                                [self showPreview];
-                                            } else {
-                                                [self dismiss];
-                                            }
-                                            
-                                            if ([self.delegate respondsToSelector:@selector(picker:didTakePicture:)]) {
-                                                [self.delegate picker:self didTakePicture:image];
-                                            }
-                                        }];
+            NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+            
+            self.imageOrientation = [JPSImagePickerController currentImageOrientation:self.deviceOrientation];
+            
+            UIImage *image = [UIImage imageWithCGImage:[[[UIImage alloc] initWithData:imageData] CGImage]
+                                           scale:1.0f
+                                           orientation:self.imageOrientation];
+            
+            
+            NSString* messageHardwareType = nil;
+            struct utsname platform;
+        
+            if (uname(&platform) != -1)
+            {
+                messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
+                
+                if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
+                {
+                    [self ScaleImageToFitIpad:&image];
+                }
+            }
+            
+            self.previewImage = image;
+            
+            if (self.editingEnabled) {
+                [self showPreview];
+            } else {
+                [self dismiss];
+            }
+            
+            if ([self.delegate respondsToSelector:@selector(picker:didTakePicture:)]) {
+                [self.delegate picker:self didTakePicture:image];
+            }
+        }];
 
     self.cameraButton.enabled = NO;
 
@@ -801,10 +807,6 @@
 }
 
 + (UIImageOrientation)currentImageOrientation:(UIDeviceOrientation)deviceOrientation {
-
-    // This function was gutted because it didn't work well.  Now it always returns
-    // the same orientation, placing the burden on the user to get the orientation
-    // correct (landscape or portrait).
     
     return UIImageOrientationRight;
 }
