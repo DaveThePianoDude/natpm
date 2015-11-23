@@ -37,6 +37,9 @@
 @property (nonatomic, strong) UIButton    * flipItButton;
 @property (nonatomic, strong) UIButton    * useButton;
 
+// Pinch Gesture Recognizer
+@property (nonatomic,strong)  UIPinchGestureRecognizer *pinchGR;
+
 // Preview Top Area
 @property (nonatomic, strong) UILabel * confirmationLabel;
 @property (nonatomic, strong) UILabel * confirmationOverlayLabel;
@@ -54,7 +57,40 @@
         self.flashlightEnabled = YES;
         self.zoomEnabled = YES;
     }
+    
+    _pinchGR = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+    _pinchGR.delegate = self;
+    [self.view addGestureRecognizer:_pinchGR];
+    
     return self;
+}
+
+- (void)handlePinch:(UIPinchGestureRecognizer *)pinchGestureRecognizer
+{
+    //handle pinch...
+    //NSLog(@"pinch velocity = %f",_pinchGR.velocity);
+    const CGFloat pinchVelocityDividerFactor = 5.0f;
+    
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        NSError *error = nil;
+        
+        AVCaptureDevice *device = [self currentDevice];
+        
+        if ([device lockForConfiguration:&error]) {
+            
+            NSLog(@"%f",_pinchGR.velocity);
+            
+            CGFloat desiredZoomFactor = device.videoZoomFactor + atan2f(_pinchGR.velocity, pinchVelocityDividerFactor);
+            
+            // Check if desiredZoomFactor fits required range from 1.0 to activeFormat.videoMaxZoomFactor
+            device.videoZoomFactor = MAX(1.0, MIN(desiredZoomFactor, device.activeFormat.videoMaxZoomFactor));
+            
+            [device unlockForConfiguration];
+            
+        } else {
+            NSLog(@"error: %@", error);
+        }
+    }
 }
 
 - (void)viewDidLoad {
@@ -79,8 +115,6 @@
                                                  }
                                              }];
 }
-
-
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -462,7 +496,6 @@
 
 }
 
-
 - (void)dismiss {
     if ([self.delegate respondsToSelector:@selector(pickerDidCancel:)]) {
         [self.delegate pickerDidCancel:self];
@@ -788,6 +821,8 @@
     self.capturePreviewLayer.hidden = NO;
     self.view.userInteractionEnabled=YES;
     self.cameraButton.enabled = YES;
+    
+    
 }
 
 - (void)flipIt {

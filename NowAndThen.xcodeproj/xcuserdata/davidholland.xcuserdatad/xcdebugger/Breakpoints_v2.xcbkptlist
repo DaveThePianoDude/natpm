@@ -40,7 +40,7 @@
                   moduleName = "NowAndThen"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/davidholland/Desktop/iPhone_Dev/NowAndThenPM/Classes/test_appViewController.m"
-                  timestampString = "470000560.113515"
+                  timestampString = "470007891.867982"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "21"
@@ -55,7 +55,7 @@
                   moduleName = "NowAndThen"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/davidholland/Desktop/iPhone_Dev/NowAndThenPM/Classes/test_appViewController.m"
-                  timestampString = "470000560.113838"
+                  timestampString = "470007891.868438"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -72,11 +72,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JPSImagePickerController/JPSImagePickerController.m"
-            timestampString = "470000436.652886"
+            timestampString = "470007623.9826"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "767"
-            endingLineNumber = "767"
+            startingLineNumber = "800"
+            endingLineNumber = "800"
             landmarkName = "-retake"
             landmarkType = "5">
          </BreakpointContent>
@@ -120,11 +120,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Classes/test_appViewController.m"
-            timestampString = "469999848.674746"
+            timestampString = "470005003.409491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "-picker:didConfirmPicture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JPSImagePickerController/JPSImagePickerController.m"
-            timestampString = "469999368.517153"
+            timestampString = "470007623.9826"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "-takePicture"
             landmarkType = "5">
          </BreakpointContent>
@@ -152,12 +152,92 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JPSImagePickerController/JPSImagePickerController.m"
-            timestampString = "469999070.329379"
+            timestampString = "470007623.9826"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "-enableCapture"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JPSImagePickerController/JPSImagePickerController.m"
+            timestampString = "470005730.765373"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "-handlePinch:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JPSImagePickerController/JPSImagePickerController.m"
+            timestampString = "470007623.9826"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "-handlePinch:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JPSImagePickerController/JPSImagePickerController.m"
+            timestampString = "470007623.9826"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "-handlePinch:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JPSImagePickerController/JPSImagePickerController.m"
+            timestampString = "470007623.9826"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
+            landmarkName = "-captureOperation"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JPSImagePickerController/JPSImagePickerController.m"
+            timestampString = "470007623.9826"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "-handlePinch:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
