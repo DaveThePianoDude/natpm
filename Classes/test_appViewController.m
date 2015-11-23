@@ -100,7 +100,6 @@
     transparencySlider.maximumValue = 1;
     transparencySlider.continuous = NO;
     transparencySlider.value = 0.5;
-    transparencySlider.userInteractionEnabled = YES;
     
     // add the slider
     [transparencySlider addTarget:self action:@selector(sliderChanged:) forControlEvents: UIControlEventValueChanged];
@@ -113,8 +112,8 @@
     // lay it over the image picker view
     [imagePicker.view addSubview:overlayview];
     
-    // show all
-	//[self presentModalViewController:imagePicker animated:YES];
+    imagePicker.view.userInteractionEnabled = true;
+    
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
@@ -389,19 +388,6 @@ finishedSavingWithError:(NSError *)error
         CGSize newSize = CGSizeMake(600,480);
         
         UIImageOrientation orient = UIImageOrientationUp;
-        
-        NSString* messageHardwareType = nil;
-        struct utsname platform;
-        
-        if (uname(&platform) != -1)
-        {
-            messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
-            
-            if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
-            {
-                orient = UIImageOrientationLeft;
-            }
-        }
         
         img = [[UIImage alloc] initWithCGImage: img.CGImage
                                          scale: 1.0

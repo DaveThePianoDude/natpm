@@ -31,6 +31,7 @@
 
 // Preview
 @property (nonatomic, strong) UIImage     * previewImage;
+@property (nonatomic, strong) UIImage     * actualImage;
 @property (nonatomic, strong) UIImageView * previewImageView;
 @property (nonatomic, strong) UIButton    * retakeButton;
 @property (nonatomic, strong) UIButton    * flipItButton;
@@ -51,6 +52,7 @@
         self.zoomEnabled = YES;
         self.volumeButtonTakesPicture = YES;
         self.flashlightEnabled = YES;
+        self.zoomEnabled = YES;
     }
     return self;
 }
@@ -122,7 +124,6 @@
 
 
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
@@ -312,6 +313,7 @@
     };
     operation.queuePriority = NSOperationQueuePriorityVeryHigh;
     [self.captureQueue addOperation:operation];
+
 }
 
 - (NSBlockOperation *)captureOperation {
@@ -427,6 +429,8 @@
                                            scale:1.0f
                                            orientation:self.imageOrientation];
             
+            // copy the untransformed image for later Internet transmission
+            self.actualImage =  [UIImage imageWithCGImage:image.CGImage];
             
             NSString* messageHardwareType = nil;
             struct utsname platform;
@@ -498,6 +502,7 @@
 
         input = [AVCaptureDeviceInput deviceInputWithDevice:newCamera error:&error];
         if (!input) return;
+
         [self.session addInput:input];
     }];
     operation.completionBlock = ^{
@@ -558,7 +563,7 @@
     previewScrollView.alwaysBounceVertical = YES;
     [previewScrollView addSubview:self.previewImageView];
     previewScrollView.contentSize = self.previewImageView.frame.size;
-    previewScrollView.userInteractionEnabled = self.zoomEnabled;
+    previewScrollView.userInteractionEnabled = YES;
     [self.view addSubview:previewScrollView];
 }
 
@@ -781,7 +786,7 @@
     self.flashButton.hidden = NO;
     self.cameraSwitchButton.hidden = NO;
     self.capturePreviewLayer.hidden = NO;
-
+    self.view.userInteractionEnabled=YES;
     self.cameraButton.enabled = YES;
 }
 
@@ -795,7 +800,7 @@
 
 - (void)use {
     if ([self.delegate respondsToSelector:@selector(picker:didConfirmPicture:)]) {
-        [self.delegate picker:self didConfirmPicture:self.previewImage];
+        [self.delegate picker:self didConfirmPicture:self.actualImage];
     }
     [self dismiss];
 }
