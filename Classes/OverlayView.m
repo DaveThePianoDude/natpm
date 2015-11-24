@@ -15,7 +15,7 @@
 #define BORDER_MARGIN_WIDTH 0.05
 
 #import "OverlayView.h"
-#import "test_appAppDelegate.h"
+#import "NowAndThenPMDelegate.h"
 
 #include <sys/utsname.h>
 
@@ -23,7 +23,6 @@
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-   
     return NO;
 }
 
@@ -114,10 +113,8 @@
     NSLog(@"Refreshed overlay view.");
 }
 
-- (void) dealloc
-{
-    //[super dealloc];
-}
+- (void) dealloc {}
 
+- (void) sliderChanged:(id)sender {}
 
 @end

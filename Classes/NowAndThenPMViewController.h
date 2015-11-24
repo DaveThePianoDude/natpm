@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "JPSImagePickerController.h"
 
-@interface test_appViewController : UIViewController  <UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
+@interface NowAndThenPMViewController : UIViewController  <UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
 {
 	UIButton *activatorButton;
     UIButton *pickerButton;

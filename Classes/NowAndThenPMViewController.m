@@ -8,15 +8,15 @@
 #define IDIOM    UI_USER_INTERFACE_IDIOM()
 #define IPAD     UIUserInterfaceIdiomPad
 
-#import "test_appAppDelegate.h"
-#import "test_appViewController.h"
+#import "NowAndThenPMDelegate.h"
+#import "NowAndThenPMViewController.h"
 #import "OverlayView.h"
 
 #import "JPSImagePickerController.h"
 
 #include <sys/utsname.h>
 
-@interface test_appViewController () <JPSImagePickerDelegate>
+@interface NowAndThenPMViewController () <JPSImagePickerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *selectedFriendsView;
 @property (strong, nonatomic) NSMutableArray * localAlbums;
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation test_appViewController
+@implementation NowAndThenPMViewController
 
 @synthesize matchingImage;
 

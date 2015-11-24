@@ -8,13 +8,13 @@
 #import <UIKit/UIKit.h>
 #import "JPSImagePickerController.h"
 
-@class test_appViewController;
+@class NowAndThenPMViewController;
 
-@interface test_appAppDelegate : UIResponder <UIApplicationDelegate, UIImagePickerControllerDelegate>
+@interface NowAndThenPMDelegate : UIResponder <UIApplicationDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic, retain) test_appViewController *vc;
+@property (nonatomic, retain) NowAndThenPMViewController *vc;
 
 @end
 

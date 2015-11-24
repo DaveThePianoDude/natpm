@@ -3,12 +3,12 @@
 //  test-app
 //
 
-#import "test_appAppDelegate.h"
-#import "test_appViewController.h"
+#import "NowAndThenPMDelegate.h"
+#import "NowAndThenPMViewController.h"
 #include <QuartzCore/QuartzCore.h>
 
 
-@implementation test_appAppDelegate
+@implementation NowAndThenPMDelegate
 
 @synthesize window, vc;
 
@@ -29,7 +29,7 @@
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// Create primary view controller
-	vc = [[test_appViewController alloc] init];
+	vc = [[NowAndThenPMViewController alloc] init];
     
     [self.window setRootViewController:vc];
     

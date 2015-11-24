@@ -56,12 +56,10 @@
         self.volumeButtonTakesPicture = YES;
         self.flashlightEnabled = YES;
         self.zoomEnabled = YES;
+    
+        _pinchGR = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+        [self.view addGestureRecognizer:_pinchGR];
     }
-    
-    _pinchGR = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
-    _pinchGR.delegate = self;
-    [self.view addGestureRecognizer:_pinchGR];
-    
     return self;
 }
 
@@ -118,6 +116,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self.motionManager stopAccelerometerUpdates];
 }
 
@@ -801,9 +800,7 @@
     for (UIView *subView in self.view.subviews)
     {
         if ([subView isKindOfClass:[UIScrollView class]])
-        {
             [subView removeFromSuperview];
-        }
     }
     
     self.previewImageView.hidden = YES;
@@ -821,8 +818,6 @@
     self.capturePreviewLayer.hidden = NO;
     self.view.userInteractionEnabled=YES;
     self.cameraButton.enabled = YES;
-    
-    
 }
 
 - (void)flipIt {
@@ -847,7 +842,6 @@
 }
 
 + (UIImageOrientation)currentImageOrientation:(UIDeviceOrientation)deviceOrientation {
-    
     return UIImageOrientationRight;
 }
 
