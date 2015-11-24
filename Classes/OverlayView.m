@@ -1,6 +1,5 @@
 //
 //  OverlayView.m
-//  test-app
 //
 //  Created by David Holland on 7/23/13.
 //
@@ -108,10 +107,7 @@
     return self;
 }
 
-- (void) drawRect:(CGRect)rect
-{    
-    NSLog(@"Refreshed overlay view.");
-}
+- (void) drawRect:(CGRect)rect {}
 
 - (void) dealloc {}
 

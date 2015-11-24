@@ -552,7 +552,7 @@
     [UIView transitionWithView:self.capturePreviewView
                       duration:1.0f
                        options:UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent
-                    animations:nil
+                    animations:^{}
                     completion:^(BOOL finished) {
                                 self.cameraSwitchButton.enabled = YES;
                             }];

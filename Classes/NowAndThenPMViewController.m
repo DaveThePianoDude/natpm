@@ -1,9 +1,8 @@
 //
-//  test_appViewController.m
-//  test-app
-//  Users/davidholland/Desktop/ iPhone Development/SavCam2PNG/Classes/test_appViewController.m
-//  Copyright iPhoneDevTips.com All rights reserved.
+//  Now and Then PhotoMatcher (NatPM)
 //
+//  Created by David Holland on 9/5/13.
+//  Modified for second release (verson 2.0) November 2015
 
 #define IDIOM    UI_USER_INTERFACE_IDIOM()
 #define IPAD     UIUserInterfaceIdiomPad

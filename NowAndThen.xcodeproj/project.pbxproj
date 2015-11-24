@@ -328,11 +328,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
-					"\"$(SRCROOT)/../../FacebookSDK\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -356,11 +352,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
-					"\"$(SRCROOT)/../../FacebookSDK\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = test_app_Prefix.pch;
 				INFOPLIST_FILE = "test_app-Info.plist";

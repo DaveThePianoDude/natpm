@@ -1,7 +1,8 @@
 //
-//  test_appAppDelegate.m
-//  test-app
+//  Now and Then PhotoMatcher (NatPM)
 //
+//  Created by David Holland on 9/5/13.
+//  Modified for second release (verson 2.0) November 2015
 
 #import "NowAndThenPMDelegate.h"
 #import "NowAndThenPMViewController.h"
@@ -12,11 +13,12 @@
 
 @synthesize window, vc;
 
-- (void)application:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
 
+    return true;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
