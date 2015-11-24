@@ -276,10 +276,30 @@ finishedSavingWithError:(NSError *)error
                                             animations:^{imageView.alpha = 1;}];
                        }];
 
+    // default uses blank to deliver 'Camera.png' as file name
+    NSString *suffix = @"";
+      
+    NSString* messageHardwareType = nil;
+    struct utsname platform;
+      
+    if (uname(&platform) != -1)
+    {
+        messageHardwareType = [NSString stringWithCString:platform.machine encoding:NSUTF8StringEncoding];
+          
+        if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
+        
+            suffix = @"_iPad"; // augment suffix if iPad is device
+    }
+      
+    // pre-define the filename strings
+    NSString *CameraStr = [NSString stringWithFormat:@"Camera%@.png", suffix];
+    NSString *GalleryStr = [NSString stringWithFormat:@"Gallery%@.png", suffix];
+    NSString *InstructionsStr = [NSString stringWithFormat:@"Instructions%@.png", suffix];
+      
     // add button to activate camera
     activatorButton = [UIButton buttonWithType:UIButtonTypeSystem];
       
-    [activatorButton setBackgroundImage:[UIImage imageNamed:@"Camera.png"] forState:UIControlStateNormal];
+    [activatorButton setBackgroundImage:[UIImage imageNamed:CameraStr] forState:UIControlStateNormal];
     activatorButton.translatesAutoresizingMaskIntoConstraints = NO;
       
     [activatorButton addTarget:self action:@selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];      
@@ -303,7 +323,7 @@ finishedSavingWithError:(NSError *)error
       
     // add button to activate gallery image picker
     pickerButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [pickerButton setBackgroundImage:[UIImage imageNamed:@"Gallery.png"] forState:UIControlStateNormal];
+    [pickerButton setBackgroundImage:[UIImage imageNamed:GalleryStr] forState:UIControlStateNormal];
     pickerButton.translatesAutoresizingMaskIntoConstraints = NO;
       
     [pickerButton addTarget:self action:@selector(pickerButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
@@ -329,7 +349,7 @@ finishedSavingWithError:(NSError *)error
     
     // add button to show instructions
     infoIcon = [UIButton buttonWithType:UIButtonTypeSystem];
-    [infoIcon setBackgroundImage:[UIImage imageNamed:@"Instructions.png"] forState:UIControlStateNormal];
+    [infoIcon setBackgroundImage:[UIImage imageNamed:InstructionsStr] forState:UIControlStateNormal];
     infoIcon.translatesAutoresizingMaskIntoConstraints = NO;
       
     [infoIcon addTarget:self action:@selector(infoButtonPressed:) forControlEvents: UIControlEventTouchUpInside];

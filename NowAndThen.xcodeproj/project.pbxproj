@@ -15,6 +15,11 @@
 		0838AEF9179F4EF80005C015 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0838AEF8179F4EF80005C015 /* OverlayView.m */; };
 		0838AEFB179F4FFD0005C015 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0838AEFA179F4FFD0005C015 /* Default-568h@2x.png */; };
 		083CD3CF17A40D9300AA00EC /* time_machine.png in Resources */ = {isa = PBXBuildFile; fileRef = 083CD3CE17A40D9300AA00EC /* time_machine.png */; };
+		085091631C0405A800EFB30A /* Camera_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 085091621C0405A800EFB30A /* Camera_iPad.png */; };
+		085091651C0405C000EFB30A /* Instructions_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 085091641C0405C000EFB30A /* Instructions_iPad.png */; };
+		085091671C04088F00EFB30A /* Gallery_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 085091661C04088F00EFB30A /* Gallery_iPad.png */; };
+		0850916F1C040B0000EFB30A /* Camera_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850916E1C040B0000EFB30A /* Camera_iPad.png */; };
+		085091711C040B5500EFB30A /* Gallery.png in Resources */ = {isa = PBXBuildFile; fileRef = 085091701C040B5500EFB30A /* Gallery.png */; };
 		0866B7FD17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png in Resources */ = {isa = PBXBuildFile; fileRef = 0866B7FC17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png */; };
 		088007251819398F0063FBC7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088007241819398F0063FBC7 /* CoreLocation.framework */; };
 		089D44C31BFBCA4E00A5806E /* JPSCameraButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 089D44BB1BFBCA4E00A5806E /* JPSCameraButton.m */; };
@@ -52,6 +57,11 @@
 		0838AEF8179F4EF80005C015 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
 		0838AEFA179F4FFD0005C015 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		083CD3CE17A40D9300AA00EC /* time_machine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time_machine.png; sourceTree = "<group>"; };
+		085091621C0405A800EFB30A /* Camera_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Camera_iPad.png; sourceTree = "<group>"; };
+		085091641C0405C000EFB30A /* Instructions_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Instructions_iPad.png; sourceTree = "<group>"; };
+		085091661C04088F00EFB30A /* Gallery_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gallery_iPad.png; sourceTree = "<group>"; };
+		0850916E1C040B0000EFB30A /* Camera_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Camera_iPad.png; sourceTree = "<group>"; };
+		085091701C040B5500EFB30A /* Gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gallery.png; sourceTree = "<group>"; };
 		0866B7FC17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NowAndThen_CoverUpdate.png; sourceTree = "<group>"; };
 		0878375F18254AE5004AA3B6 /* NetworkPhotoAlbum_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkPhotoAlbum_Prefix.pch; path = ../../nimbus/examples/photos/NetworkPhotoAlbums/src/NetworkPhotoAlbum_Prefix.pch; sourceTree = "<group>"; };
 		088007241819398F0063FBC7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -135,10 +145,10 @@
 				089D44BC1BFBCA4E00A5806E /* JPSImagePickerController.bundle */,
 				089D44BD1BFBCA4E00A5806E /* JPSImagePickerController.h */,
 				089D44BE1BFBCA4E00A5806E /* JPSImagePickerController.m */,
-				089D44BF1BFBCA4E00A5806E /* JPSVolumeButtonHandler.h */,
 				089D44C01BFBCA4E00A5806E /* JPSVolumeButtonHandler.m */,
 				089D44C11BFBCA4E00A5806E /* UIImage+DrawBlock.h */,
 				089D44C21BFBCA4E00A5806E /* UIImage+DrawBlock.m */,
+				089D44BF1BFBCA4E00A5806E /* JPSVolumeButtonHandler.h */,
 			);
 			path = JPSImagePickerController;
 			sourceTree = SOURCE_ROOT;
@@ -186,6 +196,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0850916E1C040B0000EFB30A /* Camera_iPad.png */,
+				085091701C040B5500EFB30A /* Gallery.png */,
+				085091661C04088F00EFB30A /* Gallery_iPad.png */,
+				085091641C0405C000EFB30A /* Instructions_iPad.png */,
+				085091621C0405A800EFB30A /* Camera_iPad.png */,
 				08B65B5817EE1E610026755B /* NowAndThen_Cover.png */,
 				0866B7FC17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png */,
 				08324C7717D6D2AB00ED4CD2 /* Instructions.png */,
@@ -269,15 +284,20 @@
 			files = (
 				52704E9E11376A3000BEF866 /* Camera.png in Resources */,
 				0838AEFB179F4FFD0005C015 /* Default-568h@2x.png in Resources */,
+				085091711C040B5500EFB30A /* Gallery.png in Resources */,
+				085091671C04088F00EFB30A /* Gallery_iPad.png in Resources */,
 				08A1814517A2036100E65D0A /* Gallery.png in Resources */,
 				089D44C41BFBCA4E00A5806E /* JPSImagePickerController.bundle in Resources */,
 				083CD3CF17A40D9300AA00EC /* time_machine.png in Resources */,
 				08324C7817D6D2AB00ED4CD2 /* Instructions.png in Resources */,
+				085091631C0405A800EFB30A /* Camera_iPad.png in Resources */,
 				0866B7FD17E4B1A3009FA58D /* NowAndThen_CoverUpdate.png in Resources */,
+				0850916F1C040B0000EFB30A /* Camera_iPad.png in Resources */,
 				08B65B5917EE1E610026755B /* NowAndThen_Cover.png in Resources */,
 				081C289817EE6A28003A90F9 /* time_machine_bgr.png in Resources */,
 				081C289C17EE7227003A90F9 /* time_machine_76.png in Resources */,
 				081C289D17EE7227003A90F9 /* time_machine_120.png in Resources */,
+				085091651C0405C000EFB30A /* Instructions_iPad.png in Resources */,
 				081C289E17EE7227003A90F9 /* time_machine_152.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
