@@ -665,7 +665,7 @@
     self.useButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.useButton.titleLabel.font = [UIFont systemFontOfSize:18.0f];
     self.useButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.useButton setTitle:@"Use" forState:UIControlStateNormal];
+    [self.useButton setTitle:@"Send" forState:UIControlStateNormal];
     [self.useButton addTarget:self action:@selector(use) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.useButton];
 
@@ -829,10 +829,36 @@
 }
 
 - (void)use {
-    if ([self.delegate respondsToSelector:@selector(picker:didConfirmPicture:)]) {
-        [self.delegate picker:self didConfirmPicture:self.actualImage];
-    }
-    [self dismiss];
+    
+    
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert:"
+                                                                   message:@"Share this photo match on photomatcher.com?"
+                                                            preferredStyle:UIAlertControllerStyleActionSheet]; // 1
+    
+    UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"OK"
+                                  
+              style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                  NSLog(@"You pressed button one");
+                  
+                  if ([self.delegate respondsToSelector:@selector(picker:didConfirmPicture:)]) {
+                      [self.delegate picker:self didConfirmPicture:self.actualImage];
+                  }
+                  
+                  [self dismiss];
+              }]; // 2
+    
+    UIAlertAction *secondAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                   
+               style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                   NSLog(@"You pressed button two");
+                   
+               }]; // 3
+    
+    [alert addAction:firstAction]; // 4
+    [alert addAction:secondAction]; // 5
+    
+    [self presentViewController:alert animated:YES completion:nil]; // 6
 }
 
 #pragma mark - Orientation

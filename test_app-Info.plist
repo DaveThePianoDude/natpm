@@ -10,6 +10,8 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleIconFile</key>
 	<string>time_machine_bgr.png</string>
 	<key>CFBundleIconFiles</key>
@@ -35,9 +37,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string></string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -51,12 +55,26 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>FacebookAppID</key>
-	<string>562879047092749</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string></string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow Now and Then to Use Current Location?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow Now and Then to Use Current Location?</string>
+	<key>SMAuthorizedClients</key>
+	<array>
+		<string></string>
+	</array>
+	<key>UIApplicationExitsOnSuspend</key>
+	<false/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string></string>
+	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiresFullScreen</key>
@@ -65,5 +83,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>privacy - location usage description</key>
+	<string>Allow Now and Then to Use Current Location</string>
 </dict>
 </plist>

@@ -38,6 +38,7 @@
  
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
     [self setupImageView];
 }
 
@@ -170,7 +171,7 @@
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
         [alert show];
-}
+   }
 
 -(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize {
     
@@ -203,19 +204,19 @@
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation
-{
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    // Assigning the last object as the current location of the device
+    CLLocation *newLocation = locations.firstObject;
+    
     double degrees = newLocation.coordinate.latitude;
     
-    self.lat = [NSString stringWithFormat:@"%f", // had to say 'self.' here, not sure why :|
-            degrees];
-
+    self.lat = [NSString stringWithFormat:@"%f",
+                degrees];
+    
     degrees = newLocation.coordinate.longitude;
     
     self.lon = [NSString stringWithFormat:@"%f",
-            degrees];
+                degrees];
 }
 
 -(void)image:(UIImage *)image
@@ -239,6 +240,24 @@ finishedSavingWithError:(NSError *)error
   {
     // set the hosting view
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+      
+      locationManager = [[CLLocationManager alloc]init];
+      
+      // Custom initialization code
+      locationManager.delegate = self;
+
+      locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+      // Setting distance fiter to 10 to get notified only after location change about 10 meter
+      locationManager.distanceFilter = kCLDistanceFilterNone;
+      
+      // Requesting for authorization
+      if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]){
+          [locationManager requestWhenInUseAuthorization];
+      }
+      
+      // Immediately starts updating the location
+      [locationManager startUpdatingLocation];
+      [locationManager startUpdatingHeading];
       
     // add a modern Historia Title cover
     SecondTitleView *secondView = [[SecondTitleView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
@@ -389,6 +408,7 @@ finishedSavingWithError:(NSError *)error
 }
 
 - (void)picker:(JPSImagePickerController *)picker didConfirmPicture:(UIImage *)picture {
+    
     self.imageView.image = picture;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
@@ -423,7 +443,7 @@ finishedSavingWithError:(NSError *)error
         //NSLog(@"Domain Name: %@", domain);
         
         // get the url of the Now and Then page that stores NOW photos.
-        NSString *urlString = [NSString stringWithFormat:@"http://%@.com/storenowphoto.php?createdAt=%@", domain, timestamp];
+        NSString *urlString = [NSString stringWithFormat:@"https://%@.com/storenowphoto.php?createdAt=%@", domain, timestamp];
         
         // Build the request and send the image.
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -455,15 +475,14 @@ finishedSavingWithError:(NSError *)error
         UIImage* imageTHEN = [UIImage imageWithContentsOfFile:path]; //this works
         
         imageTHEN = [[UIImage alloc] initWithCGImage: imageTHEN.CGImage
-                                         scale: 1.0
-                                   orientation: UIImageOrientationUp];
-
+                                               scale: 1.0
+                                         orientation: UIImageOrientationUp];
         
         imageTHEN = [self imageWithImage:imageTHEN scaledToSize:newSize];
         
         NSData *imageDataTHEN = UIImagePNGRepresentation(imageTHEN);
         
-        NSString *urlStringTHEN = [NSString stringWithFormat:@"http://%@.com/storethenphoto.php?createdAt=%@", domain, timestamp];
+        NSString *urlStringTHEN = [NSString stringWithFormat:@"https://%@.com/storethenphoto.php?createdAt=%@", domain, timestamp];
         
         NSMutableURLRequest *requestTHEN = [[NSMutableURLRequest alloc] init];
         [requestTHEN setURL:[NSURL URLWithString:urlStringTHEN]];
@@ -486,7 +505,7 @@ finishedSavingWithError:(NSError *)error
         
         NSLog(@"ReturnString THEN: %@", returnStringTHEN);
         
-        NSString *urlStringPLACE = [NSString stringWithFormat:@"http://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
+        NSString *urlStringPLACE = [NSString stringWithFormat:@"https://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
         
         [NSData dataWithContentsOfURL: [NSURL URLWithString:urlStringPLACE]];
         

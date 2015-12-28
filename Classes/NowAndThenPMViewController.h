@@ -23,6 +23,8 @@
     UIActivityIndicatorView *spinner;
     
     CLLocationManager *locationManager;
+    
+    Boolean *showFlag;
 }
 
 @property (assign) UIImage* matchingImage;
