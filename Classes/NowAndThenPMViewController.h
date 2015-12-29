@@ -24,8 +24,11 @@
     
     CLLocationManager *locationManager;
     
+    
     Boolean *showFlag;
 }
+
+@property (nonatomic, strong) UIProgressView *progressView; 
 
 @property (assign) UIImage* matchingImage;
 @property (strong) NSString* lat;

@@ -38,6 +38,7 @@
  
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+
     
     [self setupImageView];
 }
@@ -77,7 +78,7 @@
     imagePicker.flashlightEnabled = NO;
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
 
-    int slider_margin = frameWidth * .267;
+    int slider_margin = frameWidth * .261;
     
     NSString* messageHardwareType = nil;
     struct utsname platform;
@@ -89,7 +90,7 @@
         
         if ([messageHardwareType rangeOfString:@"iPad"].location != NSNotFound)
 
-            slider_margin = frameWidth * .113;
+            slider_margin = frameWidth * .111;
     }
     
     // make the transparency slider, starting with the frame
@@ -131,7 +132,7 @@
     
     float sliderValue = transparencySlider.value;
     
-    [imagePicker dismissViewControllerAnimated: NO completion: nil];
+    //[imagePicker dismissViewControllerAnimated: NO completion: nil];
     
     // make another custom view
     OverlayView *overlayview = [[OverlayView alloc] initWithParams: self.view.frame : matchingImage : sliderValue];
@@ -141,7 +142,7 @@
     // lay it over the image picker view
     [imagePicker.view addSubview:overlayview];
     
-    [self presentViewController:imagePicker animated:NO completion:nil];
+    //[self presentViewController:imagePicker animated:NO completion:nil];
 }
 
 // This function is called when the image picker is invoked as an actual image picker!
@@ -390,6 +391,12 @@ finishedSavingWithError:(NSError *)error
                                                                        constant:-frameHeight/6];
     [self.view addConstraints:@[centerInfoX, centerInfoY]];
       
+    // Adds a progress bar for data send operation.
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width * .75,100)];
+    self.progressView.center = CGPointMake( self.view.frame.size.width * .5, self.view.frame.size.height * .15);
+      
+    [self.progressView setTransform:CGAffineTransformMakeScale(1.0, 3.0)];
+    [self.view addSubview:self.progressView];
   }
     
   return self;
@@ -410,6 +417,8 @@ finishedSavingWithError:(NSError *)error
 - (void)picker:(JPSImagePickerController *)picker didConfirmPicture:(UIImage *)picture {
     
     self.imageView.image = picture;
+    
+    self.progressView.progress = 0.12;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
         // we're on a secondary thread, do expensive computation here
@@ -440,7 +449,7 @@ finishedSavingWithError:(NSError *)error
         NSData *imageDataNOW = UIImagePNGRepresentation(img);
         NSString *domain = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppDomainName"];
         
-        //NSLog(@"Domain Name: %@", domain);
+        self.progressView.progress = 0.1;
         
         // get the url of the Now and Then page that stores NOW photos.
         NSString *urlString = [NSString stringWithFormat:@"https://%@.com/storenowphoto.php?createdAt=%@", domain, timestamp];
@@ -464,6 +473,9 @@ finishedSavingWithError:(NSError *)error
         
         NSData *returnDataNOW = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
         NSString *returnStringNOW = [[NSString alloc] initWithData:returnDataNOW encoding:NSUTF8StringEncoding];
+        
+        self.progressView.progress = 0.3;
+        
         NSLog(@"ReturnString NOW: %@", returnStringNOW);
         
         // next send the THEN image.  First get the image saved previously...
@@ -505,11 +517,18 @@ finishedSavingWithError:(NSError *)error
         
         NSLog(@"ReturnString THEN: %@", returnStringTHEN);
         
+        self.progressView.progress = 0.7;
+        
         NSString *urlStringPLACE = [NSString stringWithFormat:@"https://%@.com/storephotomatch.php?&userName=admin&createdAt=%@&lat=%@&lon=%@", domain, timestamp, _lat, _lon ];
         
         [NSData dataWithContentsOfURL: [NSURL URLWithString:urlStringPLACE]];
         
+        self.progressView.progress = 1.0;
     });
+}
+
+- (void)hideProgressBar:(id)sender {
+
 }
 
 - (void)pickerDidCancel:(JPSImagePickerController *)picker {

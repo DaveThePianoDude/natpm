@@ -833,8 +833,15 @@
     
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert:"
-                                                                   message:@"Share this photo match on photomatcher.com?"
+                                                                   message:@""
                                                             preferredStyle:UIAlertControllerStyleActionSheet]; // 1
+    
+    NSMutableAttributedString *customMessage = [[NSMutableAttributedString alloc] initWithString:@"Share this photo match on photomatcher.com?"];
+    [customMessage addAttribute:NSFontAttributeName
+                  value:[UIFont systemFontOfSize:18.0]
+                  range:NSMakeRange(24, 11)];
+    
+    [alert setValue:customMessage forKey:@"attributedTitle"];
     
     UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"OK"
                                   
@@ -857,6 +864,11 @@
     
     [alert addAction:firstAction]; // 4
     [alert addAction:secondAction]; // 5
+    
+    UIPopoverPresentationController *popoverController = alert.popoverPresentationController;
+    
+    popoverController.sourceView = self.useButton;
+    popoverController.sourceRect = self.useButton.bounds;
     
     [self presentViewController:alert animated:YES completion:nil]; // 6
 }
